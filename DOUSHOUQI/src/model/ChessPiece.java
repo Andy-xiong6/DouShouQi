@@ -2,10 +2,8 @@ package model;
 
 
 public class ChessPiece {
-    // the owner of the chess
+    
     private PlayerColor owner;
-
-    // Elephant? Cat? Dog? ...
     private String name;
     private int rank;
 
@@ -16,7 +14,14 @@ public class ChessPiece {
     }
 
     public boolean canCapture(ChessPiece target) {
-        // TODO: Finish this method!
+        if(target.getOwner() == this.owner) {
+            return false;
+        }else if(target.getRank() <= this.rank){
+            if(target.getRank() == 1 && this.rank == 8){
+                return false;
+            }
+            return true;
+        }
         return false;
     }
 
@@ -26,5 +31,9 @@ public class ChessPiece {
 
     public PlayerColor getOwner() {
         return owner;
+    }
+
+    public int getRank() {
+        return rank;
     }
 }

@@ -1,26 +1,20 @@
 package view;
 
-
 import model.ChessboardPoint;
 import model.PlayerColor;
 
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * This is the equivalent of the ChessPiece class,
- * but this class only cares how to draw Chess on ChessboardComponent
- */
-public class ElephantChessComponent extends JChessComponent {
+public class WolfChessComponent extends JChessComponent{
     private PlayerColor owner;
-
     private boolean selected;
 
-    public ElephantChessComponent(PlayerColor owner, int size) {
-        super(owner, size);    
+    public WolfChessComponent(PlayerColor owner, int size) {
+        super(owner, size);
     }
 
-    public ElephantChessComponent(ChessboardPoint point, PlayerColor owner) {
+    public WolfChessComponent(ChessboardPoint point, PlayerColor owner) {
         super(point, owner);
         this.selected = false;
     }
@@ -32,8 +26,7 @@ public class ElephantChessComponent extends JChessComponent {
     public void setSelected(boolean selected) {
         this.selected = selected;
     }
-
-
+    
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -44,7 +37,7 @@ public class ElephantChessComponent extends JChessComponent {
         if(owner != null){
             g2.setColor(owner.getColor());
         }
-        g2.drawString("象", getWidth() / 4, getHeight() * 5 / 8); // FIXME: Use library to find the correct offset.
+        g2.drawString("狼", getWidth() / 4, getHeight() * 5 / 8); // FIXME: Use library to find the correct offset.
         if (isSelected()) { // Highlights the model if selected.
             g.setColor(Color.RED);
             g.drawOval(0, 0, getWidth() , getHeight());

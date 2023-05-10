@@ -1,26 +1,20 @@
 package view;
 
-
 import model.ChessboardPoint;
 import model.PlayerColor;
 
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * This is the equivalent of the ChessPiece class,
- * but this class only cares how to draw Chess on ChessboardComponent
- */
-public class ElephantChessComponent extends JChessComponent {
+public class DogChessComponent extends JChessComponent {
     private PlayerColor owner;
-
     private boolean selected;
 
-    public ElephantChessComponent(PlayerColor owner, int size) {
-        super(owner, size);    
+    public DogChessComponent(PlayerColor owner, int size) {
+        super(owner, size);
     }
 
-    public ElephantChessComponent(ChessboardPoint point, PlayerColor owner) {
+    public DogChessComponent(ChessboardPoint point, PlayerColor owner) {
         super(point, owner);
         this.selected = false;
     }
@@ -33,21 +27,22 @@ public class ElephantChessComponent extends JChessComponent {
         this.selected = selected;
     }
 
-
+    
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D) g;
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        Graphics2D graphics2D = (Graphics2D) g;
+        graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         Font font = new Font("楷体", Font.PLAIN, getWidth() / 2);
-        g2.setFont(font);
+        graphics2D.setFont(font);
         if(owner != null){
-            g2.setColor(owner.getColor());
+            graphics2D.setColor(owner.getColor());
         }
-        g2.drawString("象", getWidth() / 4, getHeight() * 5 / 8); // FIXME: Use library to find the correct offset.
+        graphics2D.drawString("狗", getWidth() / 4, getHeight() * 5 / 8); // FIXME: Use library to find the correct offset.
         if (isSelected()) { // Highlights the model if selected.
             g.setColor(Color.RED);
             g.drawOval(0, 0, getWidth() , getHeight());
         }
     }
+    
 }

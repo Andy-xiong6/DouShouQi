@@ -1,14 +1,24 @@
 package controller;
 
 
+import java.awt.event.MouseListener;
+
 import listener.GameListener;
 import model.Constant;
 import model.PlayerColor;
 import model.Chessboard;
 import model.ChessboardPoint;
+import view.CatChessComponent;
 import view.CellComponent;
-import view.ElephantChessComponent;
+import view.JChessComponent;
+import view.LeopardChessComponent;
+import view.LionChessComponent;
+import view.MouseChessComponent;
+import view.TigerChessComponent;
+import view.WolfChessComponent;
 import view.ChessboardComponent;
+import view.DogChessComponent;
+import view.ElephantChessComponent;
 
 /**
  * Controller is the connection between model and view,
@@ -41,9 +51,34 @@ public class GameController implements GameListener {
     private void initialize() {
         for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
             for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
+                ChessboardPoint point = new ChessboardPoint(i,j);
+                JChessComponent chessPiece = null;
 
+                if(model.getChessPieceAt(point) == null){
+                    chessPiece = new JChessComponent(point, null);
+                }else if (model.getChessPieceAt(point) != null){
+                    if(model.getChessPieceAt(point).getName() == "Elephant"){
+                        chessPiece = new ElephantChessComponent(point, model.getChessPieceOwner(point) );
+                    } else if (model.getChessPieceAt(point).getName() == "Cat"){
+                        chessPiece = new CatChessComponent(point, model.getChessPieceOwner(point) );
+                    } else if (model.getChessPieceAt(point).getName() == "Dog"){
+                        chessPiece = new DogChessComponent(point, model.getChessPieceOwner(point) );
+                    } else if (model.getChessPieceAt(point).getName() == "Lion"){
+                        chessPiece = new LionChessComponent(point, model.getChessPieceOwner(point) );
+                    } else if (model.getChessPieceAt(point).getName() == "Tiger"){
+                        chessPiece = new TigerChessComponent(point, model.getChessPieceOwner(point) );
+                    } else if (model.getChessPieceAt(point).getName() == "Leopard"){
+                        chessPiece = new LeopardChessComponent(point, model.getChessPieceOwner(point) );
+                    } else if (model.getChessPieceAt(point).getName() == "Wolf"){
+                        chessPiece = new WolfChessComponent(point, model.getChessPieceOwner(point) );
+                    } else if (model.getChessPieceAt(point).getName() == "Mouse"){
+                        chessPiece = new MouseChessComponent(point, model.getChessPieceOwner(point) );
+                    }
+                }
+                view.setChessComponentAtGrid(point, chessPiece);
             }
         }
+        view.repaint();
     }
 
     // after a valid move swap the player
@@ -52,7 +87,10 @@ public class GameController implements GameListener {
     }
 
     private boolean win() {
-        // TODO: Check the board if there is a winner
+        if(model.getChessPieceOwner(new ChessboardPoint(0, 3)).equals(PlayerColor.BLUE) &&
+                model.getChessPieceOwner(new ChessboardPoint(8, 3)).equals(PlayerColor.RED)) {
+            return true;
+        }
         return false;
     }
 
@@ -62,7 +100,7 @@ public class GameController implements GameListener {
     public void onPlayerClickCell(ChessboardPoint point, CellComponent component) {
         if (selectedPoint != null && model.isValidMove(selectedPoint, point)) {
             model.moveChessPiece(selectedPoint, point);
-            view.setChessComponentAtGrid(point, view.removeChessComponentAtGrid(selectedPoint));
+            view.setChessComponentAtGrid(point, view.removeChessComponentAtGrid(selectedPoint, selectedPoint.getClass()));
             selectedPoint = null;
             swapColor();
             view.repaint();
@@ -72,7 +110,7 @@ public class GameController implements GameListener {
 
     // click a cell with a chess
     @Override
-    public void onPlayerClickChessPiece(ChessboardPoint point, ElephantChessComponent component) {
+    public void onPlayerClickChessPiece(ChessboardPoint point, JChessComponent component) {
         if (selectedPoint == null) {
             if (model.getChessPieceOwner(point).equals(currentPlayer)) {
                 selectedPoint = point;
@@ -84,6 +122,6 @@ public class GameController implements GameListener {
             component.setSelected(false);
             component.repaint();
         }
-        // TODO: Implement capture function
+        // TODO:Implement capture function
     }
 }
