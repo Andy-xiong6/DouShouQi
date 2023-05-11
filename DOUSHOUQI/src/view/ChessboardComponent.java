@@ -136,6 +136,7 @@ public class ChessboardComponent extends JComponent {
         getGridComponentAt(point).add(chess);
     }
 
+
     public JChessComponent removeChessComponentAtGrid(ChessboardPoint point, Class<?> clazz) {
         JChessComponent chess = null;
         Component[] components = getGridComponentAt(point).getComponents();
@@ -159,6 +160,7 @@ public class ChessboardComponent extends JComponent {
         System.out.println("[" + point.y/CHESS_SIZE +  ", " +point.x/CHESS_SIZE + "] Clicked");
         return new ChessboardPoint(point.y/CHESS_SIZE, point.x/CHESS_SIZE);
     }
+    
     private Point calculatePoint(int row, int col) {
         return new Point(col * CHESS_SIZE, row * CHESS_SIZE);
     }

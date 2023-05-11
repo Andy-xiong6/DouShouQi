@@ -5,7 +5,7 @@ package model;
  * The Chessboard has 9*7 cells, and each cell has a position for chess
  */
 public class Chessboard {
-    private Cell[][] grid;
+    public Cell[][] grid;
 
     public Chessboard() {
         this.grid =
@@ -46,21 +46,21 @@ public class Chessboard {
         return getGridAt(point).getPiece();
     }
 
-    private Cell getGridAt(ChessboardPoint point) {
+    public  Cell getGridAt(ChessboardPoint point) {
         return grid[point.getRow()][point.getCol()];
     }
 
-    private int calculateDistance(ChessboardPoint src, ChessboardPoint dest) {
+    public int calculateDistance(ChessboardPoint src, ChessboardPoint dest) {
         return Math.abs(src.getRow() - dest.getRow()) + Math.abs(src.getCol() - dest.getCol());
     }
 
-    private ChessPiece removeChessPiece(ChessboardPoint point) {
+    public ChessPiece removeChessPiece(ChessboardPoint point) {
         ChessPiece chessPiece = getChessPieceAt(point);
         getGridAt(point).removePiece();
         return chessPiece;
     }
 
-    private void setChessPiece(ChessboardPoint point, ChessPiece chessPiece) {
+    public void setChessPiece(ChessboardPoint point, ChessPiece chessPiece) {
         getGridAt(point).setPiece(chessPiece);
     }
 
@@ -89,6 +89,121 @@ public class Chessboard {
     public boolean isValidMove(ChessboardPoint src, ChessboardPoint dest) {
         if (getChessPieceAt(src) == null || getChessPieceAt(dest) != null) {
             return false;
+        }
+
+        if(getChessPieceAt(src).getName() == "Mouse" && dest.isRiver() && getChessPieceAt(dest) == null){
+            return true;
+        }
+
+        if(getChessPieceAt(src).getName() != "Mouse" && dest.isRiver()){
+            return false;
+        }
+
+        //Lions and Tigers jump over the river
+        if(getChessPieceAt(src).getName() == "Lion" || getChessPieceAt(src).getName() == "Tiger"){
+
+            //Jump over the river horizontally
+            if(src.getRow() == 2 && dest.getRow() == 6 && src.getCol() == dest.getCol()){
+
+                //Check if the animal'rank in dest is higher
+                if(getChessPieceAt(src).getRank() < getChessPieceAt(dest).getRank()){
+                    return false;
+                }
+
+                //Check if there is any chess piece between the src and dest
+                for (int i = 2; i <= 6; i++) {
+                    ChessboardPoint temp = new ChessboardPoint(i, src.getCol());
+                    if(getChessPieceAt(temp) != null){
+                        return false;
+                    }
+                }
+                return true;
+                
+            }else if (src.getRow() == 6 && dest.getRow() == 2 && src.getCol() == dest.getCol()){
+
+                //Check if the animal'rank in dest is higher
+                if(getChessPieceAt(src).getRank() < getChessPieceAt(dest).getRank()){
+                    return false;
+                }
+
+                //Check if there is any chess piece between the src and dest
+                for (int i = 2; i <= 6; i++) {
+                    ChessboardPoint temp = new ChessboardPoint(i, src.getCol());
+                    if(getChessPieceAt(temp) != null){
+                        return false;
+                    }
+                }
+                return true;
+                
+            }
+
+            //Jump over the left river vertically
+            if(src.getCol() == 0 && dest.getCol() == 3 && src.getRow() == dest.getRow()){
+
+                //Check if the animal'rank in dest is higher
+                if(getChessPieceAt(src).getRank() < getChessPieceAt(dest).getRank()){
+                    return false;
+                }
+
+                //Check if there is any chess piece between the src and dest
+                for (int i = 1; i <= 2; i++) {
+                    ChessboardPoint temp = new ChessboardPoint(src.getRow(), i);
+                    if(getChessPieceAt(temp) != null){
+                        return false;
+                    }
+                }
+                return true;
+
+            }else if(src.getCol() == 3 && dest.getCol() == 0 && src.getRow() == dest.getRow()){
+                //Check if the animal'rank in dest is higher
+                if(getChessPieceAt(src).getRank() < getChessPieceAt(dest).getRank()){
+                    return false;
+                }
+
+                //Check if there is any chess piece between the src and dest
+                for (int i = 1; i <= 2; i++) {
+                    ChessboardPoint temp = new ChessboardPoint(src.getRow(), i);
+                    if(getChessPieceAt(temp) != null){
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            //Jump over the right river vertically
+            if(src.getCol() == 3 && dest.getCol() == 6 && src.getRow() == dest.getRow()){
+
+                //Check if the animal'rank in dest is higher
+                if(getChessPieceAt(src).getRank() < getChessPieceAt(dest).getRank()){
+                    return false;
+                }
+
+                //Check if there is any chess piece between the src and dest
+                for (int i = 4; i <= 5; i++) {
+                    ChessboardPoint temp = new ChessboardPoint(src.getRow(), i);
+                    if(getChessPieceAt(temp) != null){
+                        return false;
+                    }
+                }
+                return true;
+
+            }else if(src.getCol() == 6 && dest.getCol() == 3 && src.getRow() == dest.getRow()){
+                //Check if the animal'rank in dest is higher
+                if(getChessPieceAt(src).getRank() < getChessPieceAt(dest).getRank()){
+                    return false;
+                }
+
+                //Check if there is any chess piece between the src and dest
+                for (int i = 4; i <= 5; i++) {
+                    ChessboardPoint temp = new ChessboardPoint(src.getRow(), i);
+                    if(getChessPieceAt(temp) != null){
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
         }
         return calculateDistance(src, dest) == 1;
     }
