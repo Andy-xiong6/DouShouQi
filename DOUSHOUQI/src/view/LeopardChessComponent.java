@@ -11,11 +11,15 @@ public class LeopardChessComponent extends JChessComponent{
     private boolean selected;
 
     public LeopardChessComponent(PlayerColor owner, int size) {
-        super(owner, size);
+        this.owner = owner;
+        this.selected = false;
+        setSize(size/2, size/2);
+        setLocation(0,0);
+        setVisible(true);
     }
 
     public LeopardChessComponent(ChessboardPoint point, PlayerColor owner) {
-        super(point, owner);
+        this.owner = owner;
         this.selected = false;
     }
 
@@ -29,7 +33,6 @@ public class LeopardChessComponent extends JChessComponent{
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         Font font = new Font("楷体", Font.PLAIN, getWidth() / 2);

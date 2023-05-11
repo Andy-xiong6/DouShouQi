@@ -11,11 +11,15 @@ public class CatChessComponent extends JChessComponent{
     private boolean selected;
 
     public CatChessComponent(PlayerColor owner, int size) {
-        super(owner, size);
+        this.owner = owner;
+        this.selected = false;
+        setSize(size/2, size/2);
+        setLocation(0,0);
+        setVisible(true);
     }
 
     public CatChessComponent(ChessboardPoint point, PlayerColor owner) {
-        super(point, owner);
+        this.owner = owner;
         this.selected = false;
     }
 

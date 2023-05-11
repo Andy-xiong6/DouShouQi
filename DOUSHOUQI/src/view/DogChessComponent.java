@@ -11,11 +11,15 @@ public class DogChessComponent extends JChessComponent {
     private boolean selected;
 
     public DogChessComponent(PlayerColor owner, int size) {
-        super(owner, size);
+        this.owner = owner;
+        this.selected = false;
+        setSize(size/2, size/2);
+        setLocation(0,0);
+        setVisible(true);
     }
 
     public DogChessComponent(ChessboardPoint point, PlayerColor owner) {
-        super(point, owner);
+        this.owner = owner;
         this.selected = false;
     }
 

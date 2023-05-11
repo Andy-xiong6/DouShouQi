@@ -50,37 +50,9 @@ public class GameController implements GameListener {
     }
 
     private void initialize() {
-        for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
-            for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
-                ChessboardPoint point = new ChessboardPoint(i,j);
-                JChessComponent chessPiece = null;
-
-                if(model.getChessPieceAt(point) == null){
-                    chessPiece = new JChessComponent(point, null);
-                }else if (model.getChessPieceAt(point) != null){
-                    if(model.getChessPieceAt(point).getName() == "Elephant"){
-                        chessPiece = new ElephantChessComponent(point, model.getChessPieceOwner(point) );
-                    } else if (model.getChessPieceAt(point).getName() == "Cat"){
-                        chessPiece = new CatChessComponent(point, model.getChessPieceOwner(point) );
-                    } else if (model.getChessPieceAt(point).getName() == "Dog"){
-                        chessPiece = new DogChessComponent(point, model.getChessPieceOwner(point) );
-                    } else if (model.getChessPieceAt(point).getName() == "Lion"){
-                        chessPiece = new LionChessComponent(point, model.getChessPieceOwner(point) );
-                    } else if (model.getChessPieceAt(point).getName() == "Tiger"){
-                        chessPiece = new TigerChessComponent(point, model.getChessPieceOwner(point) );
-                    } else if (model.getChessPieceAt(point).getName() == "Leopard"){
-                        chessPiece = new LeopardChessComponent(point, model.getChessPieceOwner(point) );
-                    } else if (model.getChessPieceAt(point).getName() == "Wolf"){
-                        chessPiece = new WolfChessComponent(point, model.getChessPieceOwner(point) );
-                    } else if (model.getChessPieceAt(point).getName() == "Mouse"){
-                        chessPiece = new MouseChessComponent(point, model.getChessPieceOwner(point) );
-                    }
-                }
-                view.setChessComponentAtGrid(point, chessPiece);
-            }
-        }
-        view.repaint();
+        model.initPieces();
     }
+    
 
     // after a valid move swap the player
     private void swapColor() {
@@ -94,7 +66,6 @@ public class GameController implements GameListener {
         }
         return false;
     }
-
 
     // click an empty cell
     @Override
@@ -143,10 +114,12 @@ public class GameController implements GameListener {
     @Override
     public void onPlayerClickChessPiece(ChessboardPoint point, JChessComponent component) {
         if (selectedPoint == null) {
-            if (model.getChessPieceOwner(point).equals(currentPlayer)) {
-                selectedPoint = point;
-                component.setSelected(true);
-                component.repaint();
+            if(model.getChessPieceAt(point) != null){
+                if (model.getChessPieceOwner(point).equals(currentPlayer)) {
+                    selectedPoint = point;
+                    component.setSelected(true);
+                    component.repaint();
+                }
             }
         } else if (selectedPoint.equals(point)) {
             selectedPoint = null;

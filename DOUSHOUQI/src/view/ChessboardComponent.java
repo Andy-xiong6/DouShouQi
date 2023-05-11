@@ -133,7 +133,10 @@ public class ChessboardComponent extends JComponent {
     }
 
     public void setChessComponentAtGrid(ChessboardPoint point, JChessComponent chess) {
-        getGridComponentAt(point).add(chess);
+        if(chess != null){
+            getGridComponentAt(point).add(chess);
+
+        }
     }
 
 

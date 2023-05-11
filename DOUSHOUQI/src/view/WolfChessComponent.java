@@ -11,11 +11,15 @@ public class WolfChessComponent extends JChessComponent{
     private boolean selected;
 
     public WolfChessComponent(PlayerColor owner, int size) {
-        super(owner, size);
+        this.owner = owner;
+        this.selected = false;
+        setSize(size/2, size/2);
+        setLocation(0,0);
+        setVisible(true);
     }
 
     public WolfChessComponent(ChessboardPoint point, PlayerColor owner) {
-        super(point, owner);
+        this.owner = owner;
         this.selected = false;
     }
 
