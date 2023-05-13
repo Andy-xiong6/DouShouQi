@@ -59,18 +59,26 @@ public class GameController implements GameListener {
         currentPlayer = currentPlayer == PlayerColor.BLUE ? PlayerColor.RED : PlayerColor.BLUE;
     }
 
-    private boolean win() {
-        if(model.getChessPieceOwner(new ChessboardPoint(0, 3)).equals(PlayerColor.BLUE) &&
-                model.getChessPieceOwner(new ChessboardPoint(8, 3)).equals(PlayerColor.RED)) {
+    public boolean checkWin() {
+        if(model.getChessPieceAt(new ChessboardPoint(0, 3)) != null || model.getChessPieceAt(new ChessboardPoint(8, 3)) != null){
             return true;
         }
         return false;
     }
 
+    public PlayerColor getWinner(){
+        if(model.getChessPieceAt(new ChessboardPoint(0, 3)) != null){
+            return PlayerColor.BLUE;
+        }else if (model.getChessPieceAt(new ChessboardPoint(8, 3)) != null){
+            return PlayerColor.RED;
+        }
+        return null;
+    }
+
     // click an empty cell
     @Override
     public void onPlayerClickCell(ChessboardPoint point, CellComponent component) {
-        if (selectedPoint != null && model.isValidMove(selectedPoint, point)) {
+        if (selectedPoint != null && model.isValidMove(selectedPoint, point) && getWinner() == null) {
 
             //Enter the traps
             if(point.isTrap()){
@@ -111,6 +119,7 @@ public class GameController implements GameListener {
             selectedPoint = null;
             swapColor();
             view.repaint();
+            getWinner();
             
         }
     }
@@ -118,30 +127,34 @@ public class GameController implements GameListener {
     // click a cell with a chess
     @Override
     public void onPlayerClickChessPiece(ChessboardPoint point, JChessComponent component) {
-        if (selectedPoint == null) {
-            if(model.getChessPieceAt(point) != null){
-                if (model.getChessPieceOwner(point).equals(currentPlayer)) {
-                    selectedPoint = point;
-                    component.setSelected(true);
-                    component.repaint();
+        if(getWinner() == null){
+            if (selectedPoint == null) {
+                if(model.getChessPieceAt(point) != null){
+                    if (model.getChessPieceOwner(point).equals(currentPlayer)) {
+                        selectedPoint = point;
+                        component.setSelected(true);
+                        component.repaint();
+                    }
+                }
+            } else if (selectedPoint.equals(point)) {
+                selectedPoint = null;
+                component.setSelected(false);
+                component.repaint();
+            }
+    
+            if(selectedPoint != null && point != null && !selectedPoint.equals(point)){
+                if(model.getChessPieceAt(selectedPoint).canCapture(model.getChessPieceAt(point))){
+                    view.removeChessComponentAtGrid(point);
+                    model.removeChessPiece(point);
+                    model.moveChessPiece(selectedPoint, point);
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGrid(selectedPoint));
+                    selectedPoint = null;
+                    swapColor();
+                    view.repaint();
+                    getWinner();
                 }
             }
-        } else if (selectedPoint.equals(point)) {
-            selectedPoint = null;
-            component.setSelected(false);
-            component.repaint();
-        }
 
-        if(selectedPoint != null && point != null && !selectedPoint.equals(point)){
-            if(model.getChessPieceAt(selectedPoint).canCapture(model.getChessPieceAt(point))){
-                view.removeChessComponentAtGrid(point);
-                model.removeChessPiece(point);
-                model.moveChessPiece(selectedPoint, point);
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGrid(selectedPoint));
-                selectedPoint = null;
-                swapColor();
-                view.repaint();
-            }
         }
         
     }

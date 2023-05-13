@@ -94,6 +94,14 @@ public class Chessboard {
             return false;
         }
 
+        if(getChessPieceAt(src).getOwner() == PlayerColor.BLUE && dest.isDen() && dest.isBlueSide()){
+            return false;
+        }
+
+        if(getChessPieceAt(src).getOwner() == PlayerColor.RED && dest.isDen() && !dest.isBlueSide()){
+            return false;
+        }
+
         if(getChessPieceAt(src).getName() == "Mouse" && dest.isRiver() && getChessPieceAt(dest) == null){
             return true;
         }
@@ -105,47 +113,54 @@ public class Chessboard {
         //Lions and Tigers jump over the river
         if(getChessPieceAt(src).getName() == "Lion" || getChessPieceAt(src).getName() == "Tiger"){
 
-            //Jump over the river horizontally
-            if(src.getRow() == 2 && dest.getRow() == 6 && src.getCol() == dest.getCol()){
-
-                //Check if the animal'rank in dest is higher
-                if(getChessPieceAt(src).getRank() < getChessPieceAt(dest).getRank()){
-                    return false;
+            //Jump over the river vertically
+            if(src.getRow() == 2 && dest.getRow() == 6 && src.getCol() == dest.getCol() && src.getCol() != 0 && src.getCol() != 3 && src.getCol() != 6){
+                System.out.println("Ready to jump!");
+                //Check if the animal's rank in dest is higher
+                if(getChessPieceAt(dest) != null){
+                    if(getChessPieceAt(src).getRank() < getChessPieceAt(dest).getRank()){
+                        System.out.println("Eat!");
+                        return false;
+                    }
                 }
 
                 //Check if there is any chess piece between the src and dest
-                for (int i = 2; i <= 6; i++) {
+                for (int i = 3 ; i < 6 ; i++) {
                     ChessboardPoint temp = new ChessboardPoint(i, src.getCol());
                     if(getChessPieceAt(temp) != null){
                         return false;
                     }
                 }
                 return true;
-                
-            }else if (src.getRow() == 6 && dest.getRow() == 2 && src.getCol() == dest.getCol()){
+            } else if (src.getRow() == 6 && dest.getRow() == 2 && src.getCol() == dest.getCol() && src.getCol() == dest.getCol() && src.getCol() != 0 && src.getCol() != 3 && src.getCol() != 6){
 
-                //Check if the animal'rank in dest is higher
-                if(getChessPieceAt(src).getRank() < getChessPieceAt(dest).getRank()){
-                    return false;
+                //Check if the animal's rank in dest is higher
+                if(getChessPieceAt(dest) != null){
+                    if(getChessPieceAt(src).getRank() < getChessPieceAt(dest).getRank()){
+                        System.out.println("Eat!");
+                        return false;
+                    }
                 }
 
                 //Check if there is any chess piece between the src and dest
-                for (int i = 2; i <= 6; i++) {
+                for (int i = 3 ; i < 6 ; i++) {
                     ChessboardPoint temp = new ChessboardPoint(i, src.getCol());
                     if(getChessPieceAt(temp) != null){
                         return false;
                     }
                 }
                 return true;
-                
             }
+            
 
-            //Jump over the left river vertically
-            if(src.getCol() == 0 && dest.getCol() == 3 && src.getRow() == dest.getRow()){
+            //Jump over the left river horizonally
+            if(src.getCol() == 0 && dest.getCol() == 3 && src.getRow() == dest.getRow() && (src.getRow() == 3 || src.getRow() == 4 || src.getRow() ==5 )){
 
-                //Check if the animal'rank in dest is higher
-                if(getChessPieceAt(src).getRank() < getChessPieceAt(dest).getRank()){
-                    return false;
+                //Check if the animal's rank in dest is higher
+                if(getChessPieceAt(dest) != null){
+                    if(getChessPieceAt(src).getRank() < getChessPieceAt(dest).getRank()){
+                        return false;
+                    }
                 }
 
                 //Check if there is any chess piece between the src and dest
@@ -157,12 +172,14 @@ public class Chessboard {
                 }
                 return true;
 
-            }else if(src.getCol() == 3 && dest.getCol() == 0 && src.getRow() == dest.getRow()){
+            }else if(src.getCol() == 3 && dest.getCol() == 0 && src.getRow() == dest.getRow()&& (src.getRow() == 3 || src.getRow() == 4 || src.getRow() ==5 )){
                 //Check if the animal'rank in dest is higher
-                if(getChessPieceAt(src).getRank() < getChessPieceAt(dest).getRank()){
-                    return false;
+                if(getChessPieceAt(dest) != null){
+                    if(getChessPieceAt(src).getRank() < getChessPieceAt(dest).getRank()){
+                        return false;
+                    }
                 }
-
+                
                 //Check if there is any chess piece between the src and dest
                 for (int i = 1; i <= 2; i++) {
                     ChessboardPoint temp = new ChessboardPoint(src.getRow(), i);
@@ -177,10 +194,12 @@ public class Chessboard {
             if(src.getCol() == 3 && dest.getCol() == 6 && src.getRow() == dest.getRow()){
 
                 //Check if the animal'rank in dest is higher
-                if(getChessPieceAt(src).getRank() < getChessPieceAt(dest).getRank()){
-                    return false;
+                if(getChessPieceAt(dest) != null){
+                    if(getChessPieceAt(src).getRank() < getChessPieceAt(dest).getRank()){
+                        return false;
+                    }
                 }
-
+                
                 //Check if there is any chess piece between the src and dest
                 for (int i = 4; i <= 5; i++) {
                     ChessboardPoint temp = new ChessboardPoint(src.getRow(), i);
@@ -192,10 +211,12 @@ public class Chessboard {
 
             }else if(src.getCol() == 6 && dest.getCol() == 3 && src.getRow() == dest.getRow()){
                 //Check if the animal'rank in dest is higher
-                if(getChessPieceAt(src).getRank() < getChessPieceAt(dest).getRank()){
-                    return false;
+                if(getChessPieceAt(dest) != null){
+                    if(getChessPieceAt(src).getRank() < getChessPieceAt(dest).getRank()){
+                        return false;
+                    }
                 }
-
+                
                 //Check if there is any chess piece between the src and dest
                 for (int i = 4; i <= 5; i++) {
                     ChessboardPoint temp = new ChessboardPoint(src.getRow(), i);

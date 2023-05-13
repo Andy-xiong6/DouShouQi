@@ -1,6 +1,8 @@
 import controller.GameController;
 import model.Chessboard;
+import model.PlayerColor;
 import view.ChessGameFrame;
+import view.ChessboardComponent;
 
 import javax.swing.*;
 
@@ -11,5 +13,6 @@ public class Main {
             GameController gameController = new GameController(mainFrame.getChessboardComponent(), new Chessboard());
             mainFrame.setVisible(true);
         });
+
     }
 }
