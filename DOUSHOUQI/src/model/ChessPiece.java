@@ -21,6 +21,8 @@ public class ChessPiece {
                 return false;
             }
             return true;
+        }else if (target.getRank() == 8 && this.rank == 1){
+            return true;
         }
         return false;
     }

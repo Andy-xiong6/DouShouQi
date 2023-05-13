@@ -71,13 +71,14 @@ public class GameController implements GameListener {
     @Override
     public void onPlayerClickCell(ChessboardPoint point, CellComponent component) {
         if (selectedPoint != null && model.isValidMove(selectedPoint, point)) {
+
             //Enter the traps
             if(point.isTrap()){
-                if(model.getChessPieceAt(point) != null){
-                    if(point.isBlueSide() && (model.getChessPieceOwner(point) == PlayerColor.RED) ){
-                        model.getChessPieceAt(point).setRank(0);
-                    }else if (!point.isBlueSide() && (model.getChessPieceOwner(point) == PlayerColor.BLUE)){
-                        model.getChessPieceAt(point).setRank(0);
+                if(model.getChessPieceAt(selectedPoint) != null){
+                    if(point.isBlueSide() && (model.getChessPieceOwner(selectedPoint) == PlayerColor.RED) ){
+                        model.getChessPieceAt(selectedPoint).setRank(0);
+                    }else if (!point.isBlueSide() && (model.getChessPieceOwner(selectedPoint) == PlayerColor.BLUE)){
+                        model.getChessPieceAt(selectedPoint).setRank(0);
                     }
                 }
             }
@@ -130,6 +131,18 @@ public class GameController implements GameListener {
             component.setSelected(false);
             component.repaint();
         }
-        // TODO:Implement capture function
+
+        if(selectedPoint != null && point != null && !selectedPoint.equals(point)){
+            if(model.getChessPieceAt(selectedPoint).canCapture(model.getChessPieceAt(point))){
+                view.removeChessComponentAtGrid(point);
+                model.removeChessPiece(point);
+                model.moveChessPiece(selectedPoint, point);
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGrid(selectedPoint));
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
+            }
+        }
+        
     }
 }

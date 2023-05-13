@@ -72,7 +72,7 @@ public class Chessboard {
     }
 
     public void captureChessPiece(ChessboardPoint src, ChessboardPoint dest) {
-        if (isValidCapture(src, dest)) {
+        if (!getChessPieceAt(src).canCapture(getChessPieceAt(dest))) {
             throw new IllegalArgumentException("Illegal chess capture!");
         }else if(getChessPieceAt(src).canCapture(getChessPieceAt(dest))){
             setChessPiece(dest, removeChessPiece(src));
@@ -211,11 +211,4 @@ public class Chessboard {
         return calculateDistance(src, dest) == 1;
     }
 
-
-    public boolean isValidCapture(ChessboardPoint src, ChessboardPoint dest) {
-        if (getChessPieceAt(src) == null || getChessPieceAt(dest) == null) {
-            return false;
-        }
-        return false;
-    }
 }
