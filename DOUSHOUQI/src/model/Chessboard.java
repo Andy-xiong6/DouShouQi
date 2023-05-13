@@ -83,7 +83,10 @@ public class Chessboard {
         return grid;
     }
     public PlayerColor getChessPieceOwner(ChessboardPoint point) {
-        return getGridAt(point).getPiece().getOwner();
+        if(getGridAt(point).getPiece().getOwner() != null){
+            return getGridAt(point).getPiece().getOwner();
+        }
+        return PlayerColor.BLUE;
     }
 
     public boolean isValidMove(ChessboardPoint src, ChessboardPoint dest) {

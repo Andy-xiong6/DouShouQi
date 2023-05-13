@@ -73,36 +73,40 @@ public class GameController implements GameListener {
         if (selectedPoint != null && model.isValidMove(selectedPoint, point)) {
             //Enter the traps
             if(point.isTrap()){
-                if(point.isBlueSide() && (model.getChessPieceOwner(point) == PlayerColor.RED) ){
-                    model.getChessPieceAt(point).setRank(0);
-                }else if (!point.isBlueSide() && (model.getChessPieceOwner(point) == PlayerColor.BLUE)){
-                    model.getChessPieceAt(point).setRank(0);
+                if(model.getChessPieceAt(point) != null){
+                    if(point.isBlueSide() && (model.getChessPieceOwner(point) == PlayerColor.RED) ){
+                        model.getChessPieceAt(point).setRank(0);
+                    }else if (!point.isBlueSide() && (model.getChessPieceOwner(point) == PlayerColor.BLUE)){
+                        model.getChessPieceAt(point).setRank(0);
+                    }
                 }
             }
 
             //Get out of the trap, reset the rank of the chess
             if(selectedPoint.isTrap()){
-                if(model.getChessPieceAt(selectedPoint).getName() == "Elephant"){
-                    model.getChessPieceAt(selectedPoint).setRank(8);
-                }else if (model.getChessPieceAt(selectedPoint).getName() == "Lion"){
-                    model.getChessPieceAt(selectedPoint).setRank(7);
-                }else if (model.getChessPieceAt(selectedPoint).getName() == "Tiger"){
-                    model.getChessPieceAt(selectedPoint).setRank(6);
-                }else if (model.getChessPieceAt(selectedPoint).getName() == "Leopard"){
-                    model.getChessPieceAt(selectedPoint).setRank(5);
-                }else if (model.getChessPieceAt(selectedPoint).getName() == "Wolf"){
-                    model.getChessPieceAt(selectedPoint).setRank(4);
-                }else if (model.getChessPieceAt(selectedPoint).getName() == "Dog"){
-                    model.getChessPieceAt(selectedPoint).setRank(3);
-                }else if (model.getChessPieceAt(selectedPoint).getName() == "Cat"){
-                    model.getChessPieceAt(selectedPoint).setRank(2);
-                }else if (model.getChessPieceAt(selectedPoint).getName() == "Mouse"){
-                    model.getChessPieceAt(selectedPoint).setRank(1);
+                if(model.getChessPieceOwner(selectedPoint) != null){
+                    if(model.getChessPieceAt(selectedPoint).getName() == "Elephant"){
+                        model.getChessPieceAt(selectedPoint).setRank(8);
+                    }else if (model.getChessPieceAt(selectedPoint).getName() == "Lion"){
+                        model.getChessPieceAt(selectedPoint).setRank(7);
+                    }else if (model.getChessPieceAt(selectedPoint).getName() == "Tiger"){
+                        model.getChessPieceAt(selectedPoint).setRank(6);
+                    }else if (model.getChessPieceAt(selectedPoint).getName() == "Leopard"){
+                        model.getChessPieceAt(selectedPoint).setRank(5);
+                    }else if (model.getChessPieceAt(selectedPoint).getName() == "Wolf"){
+                        model.getChessPieceAt(selectedPoint).setRank(4);
+                    }else if (model.getChessPieceAt(selectedPoint).getName() == "Dog"){
+                        model.getChessPieceAt(selectedPoint).setRank(3);
+                    }else if (model.getChessPieceAt(selectedPoint).getName() == "Cat"){
+                        model.getChessPieceAt(selectedPoint).setRank(2);
+                    }else if (model.getChessPieceAt(selectedPoint).getName() == "Mouse"){
+                        model.getChessPieceAt(selectedPoint).setRank(1);
+                    }
                 }
             }
 
             model.moveChessPiece(selectedPoint, point);
-            view.setChessComponentAtGrid(point, view.removeChessComponentAtGrid(selectedPoint, selectedPoint.getClass()));
+            view.setChessComponentAtGrid(point, view.removeChessComponentAtGrid(selectedPoint));
             selectedPoint = null;
             swapColor();
             view.repaint();

@@ -135,23 +135,15 @@ public class ChessboardComponent extends JComponent {
     public void setChessComponentAtGrid(ChessboardPoint point, JChessComponent chess) {
         if(chess != null){
             getGridComponentAt(point).add(chess);
-
         }
     }
 
 
-    public JChessComponent removeChessComponentAtGrid(ChessboardPoint point, Class<?> clazz) {
-        JChessComponent chess = null;
-        Component[] components = getGridComponentAt(point).getComponents();
-        for (Component component : components) {
-            if (clazz.isInstance(component)) {
-                chess = (JChessComponent) component;
-                getGridComponentAt(point).remove(component);
-                chess.setSelected(false);
-                break; 
-            }
-        }
-        revalidate();
+    public JChessComponent removeChessComponentAtGrid(ChessboardPoint point) {
+        JChessComponent chess = (JChessComponent) getGridComponentAt(point).getComponents()[0];
+        getGridComponentAt(point).removeAll();
+        getGridComponentAt(point).revalidate();
+        chess.setSelected(false);
         return chess;
     }
 
