@@ -1,25 +1,13 @@
 package controller;
 
-
-import java.awt.event.MouseListener;
-
 import listener.GameListener;
-import model.Constant;
 import model.PlayerColor;
-import model.ChessPiece;
 import model.Chessboard;
 import model.ChessboardPoint;
-import view.CatChessComponent;
 import view.CellComponent;
 import view.JChessComponent;
-import view.LeopardChessComponent;
-import view.LionChessComponent;
-import view.MouseChessComponent;
-import view.TigerChessComponent;
-import view.WolfChessComponent;
 import view.ChessboardComponent;
-import view.DogChessComponent;
-import view.ElephantChessComponent;
+import model.Player;
 
 /**
  * Controller is the connection between model and view,
@@ -34,14 +22,18 @@ public class GameController implements GameListener {
     private Chessboard model;
     private ChessboardComponent view;
     private PlayerColor currentPlayer;
+    private Player player1;
+    private Player player2;
 
     // Record whether there is a selected piece before
     private ChessboardPoint selectedPoint;
 
-    public GameController(ChessboardComponent view, Chessboard model) {
+    public GameController(ChessboardComponent view, Chessboard model, Player player1, Player player2) {
         this.view = view;
         this.model = model;
-        this.currentPlayer = PlayerColor.BLUE;
+        this.player1 = player1;
+        this.player2 = player2;
+        this.currentPlayer = player1.getColor();
 
         view.registerController(this);
         initialize();

@@ -3,7 +3,6 @@ package view;
 import model.ChessboardPoint;
 import model.PlayerColor;
 
-import javax.swing.*;
 import java.awt.*;
 
 public class DogChessComponent extends JChessComponent {
