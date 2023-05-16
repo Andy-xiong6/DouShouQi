@@ -1,6 +1,14 @@
 package view;
 
 import javax.swing.*;
+
+import controller.GameController;
+import controller.Saver;
+import model.Chessboard;
+import model.GameState;
+import model.Player;
+import model.PlayerColor;
+
 import java.awt.*;
 
 /**
@@ -13,12 +21,19 @@ public class ChessGameFrame extends JFrame {
 
     private final int ONE_CHESS_SIZE;
 
+    private JButton saveButton;
+    private JButton loadButton;
+
+    private GameState gameState;
+    private GameController gameController;
+
     private ChessboardComponent chessboardComponent;
-    public ChessGameFrame(int width, int height) {
+    public ChessGameFrame(int width, int height, GameState gameState) {
         setTitle("天天趣味斗兽棋"); //设置标题
         this.WIDTH = width;
         this.HEIGTH = height;
         this.ONE_CHESS_SIZE = (HEIGTH * 4 / 5) / 9;
+        this.gameState = gameState;
 
         setSize(WIDTH, HEIGTH);
         setLocationRelativeTo(null); // Center the window.
@@ -28,7 +43,57 @@ public class ChessGameFrame extends JFrame {
 
         addChessboard();
         addLabel();
-        addHelloButton();
+        addLoadButton();
+
+        
+        gameController = new GameController(chessboardComponent, gameState.getChessboard() ,gameState.getPlayer1(), gameState.getPlayer2());
+        gameController.setState(gameState);
+
+        saveButton = new JButton("保存游戏");
+        saveButton.addActionListener(e -> saveGameState());
+        saveButton.setBounds(800, 700, 150, 50);
+        add(saveButton);
+
+        loadButton = new JButton("加载游戏");
+        loadButton.addActionListener(e -> loadGameState());
+        loadButton.setBounds(950, 500, 150, 50);
+        add(loadButton);
+
+        JButton restartButton = new JButton("重新开始");
+        restartButton.addActionListener(e -> restartGame());
+        restartButton.setBounds(950, 600, 150, 50);
+        add(restartButton);
+
+        
+    }
+
+    private void saveGameState(){
+        Saver.save(gameState, "gamestate.ser");
+        JOptionPane.showMessageDialog(this,"保存成功！");
+    }
+
+    private void loadGameState(){
+        GameState newGameState = Saver.load("gamestate.ser");
+        if(newGameState == null){
+            JOptionPane.showMessageDialog(this, "没有发现存档");
+            return;
+        }
+
+        gameState = newGameState;
+        gameController.setState(gameState);
+
+        chessboardComponent.setGameState(gameState);
+        chessboardComponent.repaint();
+        JOptionPane.showMessageDialog(this, "加载成功！");
+    
+    }
+
+    private void restartGame(){
+        GameState gameState = new GameState(new Chessboard(), new Player("玩家1", PlayerColor.BLUE), new Player("玩家2", PlayerColor.RED), true, 0);
+        chessboardComponent.clear();
+        chessboardComponent.revalidate();
+        chessboardComponent.repaint();
+        GameController gameController = new GameController(chessboardComponent, gameState.getChessboard(), gameState.getPlayer1(), gameState.getPlayer2());
     }
 
     public ChessboardComponent getChessboardComponent() {
@@ -63,28 +128,12 @@ public class ChessGameFrame extends JFrame {
      * 在游戏面板中增加一个按钮，如果按下的话就会显示Hello, world!
      */
 
-    private void addHelloButton() {
-        JButton button = new JButton("小按钮");
-        button.addActionListener((e) -> JOptionPane.showMessageDialog(this, "Hello, world!"));
+    private void addLoadButton() {
+        JButton button = new JButton("Hello");
+        button.addActionListener((e) -> JOptionPane.showMessageDialog(this, "保存成功！"));
         button.setLocation(HEIGTH, HEIGTH / 10 + 120);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
     }
-
-//    private void addLoadButton() {
-//        JButton button = new JButton("Load");
-//        button.setLocation(HEIGTH, HEIGTH / 10 + 240);
-//        button.setSize(200, 60);
-//        button.setFont(new Font("Rockwell", Font.BOLD, 20));
-//        add(button);
-//
-//        button.addActionListener(e -> {
-//            System.out.println("Click load");
-//            String path = JOptionPane.showInputDialog(this,"Input Path here");
-//            gameController.loadGameFromFile(path);
-//        });
-//    }
-
-
 }

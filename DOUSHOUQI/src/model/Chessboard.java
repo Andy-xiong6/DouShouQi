@@ -1,10 +1,12 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * This class store the real chess information.
  * The Chessboard has 9*7 cells, and each cell has a position for chess
  */
-public class Chessboard {
+public class Chessboard implements Serializable {
     public Cell[][] grid;
 
     public Chessboard() {
@@ -13,6 +15,14 @@ public class Chessboard {
 
         initGrid();
         initPieces();
+    }
+
+    public void clear(){
+        for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
+            for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
+                grid[i][j].setPiece(null);
+            }
+        }
     }
 
     private void initGrid() {

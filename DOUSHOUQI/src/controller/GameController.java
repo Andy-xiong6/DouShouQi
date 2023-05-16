@@ -4,6 +4,7 @@ import listener.GameListener;
 import model.PlayerColor;
 import model.Chessboard;
 import model.ChessboardPoint;
+import model.GameState;
 import view.CellComponent;
 import view.JChessComponent;
 import view.ChessboardComponent;
@@ -24,6 +25,7 @@ public class GameController implements GameListener {
     private PlayerColor currentPlayer;
     private Player player1;
     private Player player2;
+    private GameState gameState;
 
     // Record whether there is a selected piece before
     private ChessboardPoint selectedPoint;
@@ -34,6 +36,7 @@ public class GameController implements GameListener {
         this.player1 = player1;
         this.player2 = player2;
         this.currentPlayer = player1.getColor();
+        this.gameState = new GameState();
 
         view.registerController(this);
         initialize();
@@ -65,6 +68,15 @@ public class GameController implements GameListener {
             return PlayerColor.RED;
         }
         return null;
+    }
+
+    public void setState(GameState gameState){
+        this.gameState = gameState;
+        this.model = gameState.getChessboard();
+        this.player1 = gameState.getPlayer1();  
+        this.player2 = gameState.getPlayer2();  
+        this.currentPlayer = gameState.isPlayer1Turn() ? PlayerColor.RED : PlayerColor.BLUE;    
+        this.selectedPoint = null; 
     }
 
     // click an empty cell
