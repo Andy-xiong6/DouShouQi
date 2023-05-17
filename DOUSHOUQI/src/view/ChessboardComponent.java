@@ -5,6 +5,8 @@ import controller.GameController;
 import model.*;
 
 import javax.swing.*;
+import javax.swing.plaf.metal.MetalIconFactory.FolderIcon16;
+
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.HashSet;
@@ -17,8 +19,8 @@ import static model.Constant.CHESSBOARD_ROW_SIZE;
  * This class represents the checkerboard component object on the panel
  */
 public class ChessboardComponent extends JComponent {
-    private final CellComponent[][] gridComponents = new CellComponent[CHESSBOARD_ROW_SIZE.getNum()][CHESSBOARD_COL_SIZE.getNum()];
-    private final int CHESS_SIZE;
+    public CellComponent[][] gridComponents = new CellComponent[CHESSBOARD_ROW_SIZE.getNum()][CHESSBOARD_COL_SIZE.getNum()];
+    public final int CHESS_SIZE;
     private final Set<ChessboardPoint> riverCell = new HashSet<>();
 
     private GameController gameController;
@@ -42,10 +44,6 @@ public class ChessboardComponent extends JComponent {
         }
     }
 
-    public void setGameState(GameState gameState) {
-        initiateChessComponent(gameState.getChessboard());
-    }
-
 
     /**
      * This method represents how to initiate ChessComponent
@@ -60,7 +58,7 @@ public class ChessboardComponent extends JComponent {
                         ChessPiece chessPiece = grid[i][j].getPiece();
                         System.out.println(chessPiece.getOwner());
                         gridComponents[i][j].add(
-                                new ElephantChessComponent(chessPiece.getOwner(),CHESS_SIZE));                        
+                                new ElephantChessComponent(chessPiece.getOwner(),CHESS_SIZE));                  
                     }else if(grid[i][j].getPiece().getName() == "Cat"){
                         ChessPiece chessPiece = grid[i][j].getPiece();
                         System.out.println(chessPiece.getOwner());
@@ -101,6 +99,8 @@ public class ChessboardComponent extends JComponent {
             }
         }
     }
+
+    
 
     public void initiateGridComponents() {
 

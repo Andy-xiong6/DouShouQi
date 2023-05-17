@@ -1,4 +1,3 @@
-import controller.GameController;
 import model.Chessboard;
 import model.GameState;
 import model.Player;

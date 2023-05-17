@@ -1,6 +1,10 @@
 package model;
+import controller.GameController;
+
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.ArrayList;
 
 public class GameState implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -9,6 +13,7 @@ public class GameState implements Serializable {
     private Player player2;
     private boolean isPlayer1Turn;
     private int moveCount;
+    private List<GameController> controllers = new ArrayList<>();
 
     //initialize the game state
     public GameState(Chessboard chessboard, Player player1, Player player2, boolean isPlayer1Turn, int moveCount) {
@@ -17,6 +22,11 @@ public class GameState implements Serializable {
         this.player2 = player2;
         this.isPlayer1Turn = isPlayer1Turn;
         this.moveCount = moveCount;
+        controllers = new ArrayList<>();
+    }
+
+    public void registerController(GameController controller) {
+        controllers.add(controller); // 将控制器添加到列表
     }
 
     public void restartGame(){
@@ -47,6 +57,12 @@ public class GameState implements Serializable {
     public boolean isPlayer1Turn(){
         return isPlayer1Turn;
     }
+
+    public PlayerColor getCurrentPlayer(){
+        if(isPlayer1Turn){
+            return player1.getColor();
+        return player2.getColor(); 
+        }
 
     //get the move count
     public int getMoveCount() {

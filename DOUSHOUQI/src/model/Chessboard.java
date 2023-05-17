@@ -112,7 +112,7 @@ public class Chessboard implements Serializable {
             return false;
         }
 
-        if(getChessPieceAt(src).getName() == "Mouse" && dest.isRiver() && getChessPieceAt(dest) == null){
+        if(getChessPieceAt(src).getName() == "Mouse" && dest.isRiver() && getChessPieceAt(dest) == null && calculateDistance(src, dest) == 1){
             return true;
         }
 

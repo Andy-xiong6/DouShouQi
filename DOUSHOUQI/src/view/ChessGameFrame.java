@@ -5,6 +5,7 @@ import javax.swing.*;
 import controller.GameController;
 import controller.Saver;
 import model.Chessboard;
+import model.Constant;
 import model.GameState;
 import model.Player;
 import model.PlayerColor;
@@ -73,19 +74,23 @@ public class ChessGameFrame extends JFrame {
     }
 
     private void loadGameState(){
+        gameController.model.clear();
+        chessboardComponent.clear();
         GameState newGameState = Saver.load("gamestate.ser");
         if(newGameState == null){
             JOptionPane.showMessageDialog(this, "没有发现存档");
             return;
         }
-
         gameState = newGameState;
-        gameController.setState(gameState);
 
-        chessboardComponent.setGameState(gameState);
+        //FIXME: 重新加载棋盘 ; 已经确定chessboard、grid、chesspiece都是没有问题的，应该是添加component的地方有问题,且之前的grid没有删除
+        
+        //chessboardComponent.initiateChessComponent(gameState.getChessboard());
+        gameController = new GameController(chessboardComponent, gameState.getChessboard(), gameState.getPlayer1(), gameState.getPlayer2());
+        chessboardComponent.revalidate();
         chessboardComponent.repaint();
         JOptionPane.showMessageDialog(this, "加载成功！");
-    
+        
     }
 
     private void restartGame(){

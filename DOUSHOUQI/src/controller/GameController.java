@@ -4,10 +4,12 @@ import listener.GameListener;
 import model.PlayerColor;
 import model.Chessboard;
 import model.ChessboardPoint;
+import model.Constant;
 import model.GameState;
 import view.CellComponent;
 import view.JChessComponent;
 import view.ChessboardComponent;
+import view.ElephantChessComponent;
 import model.Player;
 
 /**
@@ -20,7 +22,7 @@ import model.Player;
 public class GameController implements GameListener {
 
 
-    private Chessboard model;
+    public Chessboard model;
     private ChessboardComponent view;
     private PlayerColor currentPlayer;
     private Player player1;
@@ -39,12 +41,12 @@ public class GameController implements GameListener {
         this.gameState = new GameState();
 
         view.registerController(this);
-        initialize();
+        initialize(model);
         view.initiateChessComponent(model);
         view.repaint();
     }
 
-    private void initialize() {
+    private void initialize(Chessboard model) {
         model.initPieces();
     }
     
