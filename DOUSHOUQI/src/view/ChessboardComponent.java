@@ -95,6 +95,22 @@ public class ChessboardComponent extends JComponent {
                         gridComponents[i][j].add(
                                 new WolfChessComponent(chessPiece.getOwner(),CHESS_SIZE));
                     }
+                }else if (new ChessboardPoint(i, j).isTrap()){
+                    if(new ChessboardPoint(i, j).isBlueSide()){
+                        gridComponents[i][j].add(
+                            new TrapComponent(PlayerColor.BLUE));
+                    }else if (!new ChessboardPoint(i, j).isBlueSide()) {
+                        gridComponents[i][j].add(
+                            new TrapComponent(PlayerColor.RED));
+                    }
+                }else if (new ChessboardPoint(i, j).isDen()) {
+                    if(new ChessboardPoint(i, j).isBlueSide()){
+                        gridComponents[i][j].add(
+                            new DenComponent(PlayerColor.BLUE));
+                    }else if (!new ChessboardPoint(i, j).isBlueSide()) {
+                        gridComponents[i][j].add(
+                            new DenComponent(PlayerColor.RED));
+                    }
                 }
             }
         }

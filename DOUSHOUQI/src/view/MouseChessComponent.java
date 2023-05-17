@@ -5,6 +5,11 @@ import model.PlayerColor;
 
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class MouseChessComponent extends JChessComponent{
     private PlayerColor owner;
@@ -33,15 +38,22 @@ public class MouseChessComponent extends JChessComponent{
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D) g;
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        Font font = new Font("楷体", Font.PLAIN, getWidth() / 2);
-        g2.setFont(font);
-        if(owner != null){
-            g2.setColor(owner.getColor());
+        String filePath = null;
+        if(owner == PlayerColor.BLUE){
+            filePath = "D:\\Users\\xiong\\Desktop\\DouShouQi\\DOUSHOUQI\\resource\\mouse-blue.png";
+        }else if (owner == PlayerColor.RED){
+            filePath = "D:\\Users\\xiong\\Desktop\\DouShouQi\\DOUSHOUQI\\resource\\mouse-red.png";
         }
-        g2.drawString("鼠", getWidth() / 4, getHeight() * 5 / 8); // FIXME: Use library to find the correct offset.
+        
+        File file = new File(filePath);
+
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
         if (isSelected()) { // Highlights the model if selected.
             g.setColor(Color.RED);
             g.drawOval(0, 0, getWidth() , getHeight());
