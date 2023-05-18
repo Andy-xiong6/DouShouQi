@@ -2,6 +2,8 @@ package model;
 
 import java.io.Serializable;
 
+import audio.Sound;
+
 /**
  * This class store the real chess information.
  * The Chessboard has 9*7 cells, and each cell has a position for chess

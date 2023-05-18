@@ -1,5 +1,6 @@
 package controller;
 
+import audio.Sound;
 import listener.GameListener;
 import model.PlayerColor;
 import model.Chessboard;
@@ -119,7 +120,7 @@ public class GameController implements GameListener {
                     }
                 }
             }
-
+            Sound.move();
             model.moveChessPiece(selectedPoint, point);
             view.setChessComponentAtGrid(point, view.removeChessComponentAtGrid(selectedPoint));
             selectedPoint = null;
@@ -150,6 +151,7 @@ public class GameController implements GameListener {
     
             if(selectedPoint != null && point != null && !selectedPoint.equals(point)){
                 if(model.getChessPieceAt(selectedPoint).canCapture(model.getChessPieceAt(point))){
+                    Sound.eat();
                     view.removeChessComponentAtGrid(point);
                     model.removeChessPiece(point);
                     model.moveChessPiece(selectedPoint, point);

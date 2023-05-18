@@ -3,6 +3,7 @@ import model.GameState;
 import model.Player;
 import model.PlayerColor;
 import view.ChessGameFrame;
+import view.MainMenuFrame;
 
 import javax.swing.*;
 
@@ -15,8 +16,8 @@ public class Main {
 
             GameState gameState = new GameState(new Chessboard(), player1, player2, true, 0);
             
-            ChessGameFrame mainFrame = new ChessGameFrame(1100, 810, gameState);
-            mainFrame.setVisible(true);
+            MainMenuFrame mainMenuFrame = new MainMenuFrame(gameState);
+            mainMenuFrame.setVisible(true);
         });
 
     }

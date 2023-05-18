@@ -142,7 +142,13 @@ public class ChessboardComponent extends JComponent {
                     cell = new CellComponent(Color.CYAN, calculatePoint(i, j), CHESS_SIZE);
                     this.add(cell);
                 } else {
-                    cell = new CellComponent(Color.LIGHT_GRAY, calculatePoint(i, j), CHESS_SIZE);
+                    if(temp.isTrap()){
+                        cell = new CellComponent(null, calculatePoint(i, j), CHESS_SIZE);
+                    }else if(temp.isDen()){
+                        cell = new CellComponent(null, calculatePoint(i, j), CHESS_SIZE);
+                    }else{
+                        cell = new CellComponent(Color.BLACK, calculatePoint(i, j), CHESS_SIZE);
+                    }
                     this.add(cell);
                 }
                 gridComponents[i][j] = cell;
@@ -162,7 +168,13 @@ public class ChessboardComponent extends JComponent {
 
 
     public JChessComponent removeChessComponentAtGrid(ChessboardPoint point) {
-        JChessComponent chess = (JChessComponent) getGridComponentAt(point).getComponents()[0];
+        JChessComponent chess = null;
+        if(getGridComponentAt(point).getComponentCount() ==1) {
+            chess = (JChessComponent) getGridComponentAt(point).getComponents()[0];
+        }else if (getGridComponentAt(point).getComponentCount() ==2) {
+            chess = (JChessComponent) getGridComponentAt(point).getComponents()[1];
+        }
+        
         getGridComponentAt(point).removeAll();
         getGridComponentAt(point).revalidate();
         chess.setSelected(false);
@@ -196,8 +208,17 @@ public class ChessboardComponent extends JComponent {
             if (clickedComponent.getComponentCount() == 0) {
                 System.out.print("None chess here and ");
                 gameController.onPlayerClickCell(getChessboardPoint(e.getPoint()), (CellComponent) clickedComponent);
-            } else {
-                System.out.print("One chess here and ");
+            } else if(clickedComponent.getComponentCount() == 1){
+                if(clickedComponent.getComponents()[0].getClass() == ElephantChessComponent.class 
+                || clickedComponent.getComponents()[0].getClass() == CatChessComponent.class
+                || clickedComponent.getComponents()[0].getClass() == DogChessComponent.class
+                || clickedComponent.getComponents()[0].getClass() == LionChessComponent.class
+                || clickedComponent.getComponents()[0].getClass() == WolfChessComponent.class
+                || clickedComponent.getComponents()[0].getClass() == MouseChessComponent.class
+                || clickedComponent.getComponents()[0].getClass() == TigerChessComponent.class
+                || clickedComponent.getComponents()[0].getClass() == LeopardChessComponent.class
+                ){
+                    System.out.print("One chess here and ");
                 if(clickedComponent.getComponents()[0] instanceof ElephantChessComponent){
                     gameController.onPlayerClickChessPiece(getChessboardPoint(e.getPoint()), (ElephantChessComponent) clickedComponent.getComponents()[0]);
                 }else if(clickedComponent.getComponents()[0] instanceof CatChessComponent){
@@ -215,7 +236,29 @@ public class ChessboardComponent extends JComponent {
                 }else if(clickedComponent.getComponents()[0] instanceof WolfChessComponent){
                     gameController.onPlayerClickChessPiece(getChessboardPoint(e.getPoint()), (WolfChessComponent) clickedComponent.getComponents()[0]);
                 }
-                
+                }else{
+                    System.out.print("Not chess here and ");
+                    gameController.onPlayerClickCell(getChessboardPoint(e.getPoint()), (CellComponent) clickedComponent);
+                }
+            } else {
+                System.out.print("One chess here and ");
+                if(clickedComponent.getComponents()[1] instanceof ElephantChessComponent){
+                    gameController.onPlayerClickChessPiece(getChessboardPoint(e.getPoint()), (ElephantChessComponent) clickedComponent.getComponents()[1]);
+                }else if(clickedComponent.getComponents()[1] instanceof CatChessComponent){
+                    gameController.onPlayerClickChessPiece(getChessboardPoint(e.getPoint()), (CatChessComponent) clickedComponent.getComponents()[1]);
+                }else if(clickedComponent.getComponents()[1] instanceof DogChessComponent){
+                    gameController.onPlayerClickChessPiece(getChessboardPoint(e.getPoint()), (DogChessComponent) clickedComponent.getComponents()[1]);
+                }else if(clickedComponent.getComponents()[1] instanceof LionChessComponent){
+                    gameController.onPlayerClickChessPiece(getChessboardPoint(e.getPoint()), (LionChessComponent) clickedComponent.getComponents()[1]);
+                }else if(clickedComponent.getComponents()[1] instanceof LeopardChessComponent){
+                    gameController.onPlayerClickChessPiece(getChessboardPoint(e.getPoint()), (LeopardChessComponent) clickedComponent.getComponents()[1]);
+                }else if(clickedComponent.getComponents()[1] instanceof MouseChessComponent){
+                    gameController.onPlayerClickChessPiece(getChessboardPoint(e.getPoint()), (MouseChessComponent) clickedComponent.getComponents()[1]);
+                }else if(clickedComponent.getComponents()[1] instanceof TigerChessComponent){
+                    gameController.onPlayerClickChessPiece(getChessboardPoint(e.getPoint()), (TigerChessComponent) clickedComponent.getComponents()[1]);
+                }else if(clickedComponent.getComponents()[1] instanceof WolfChessComponent){
+                    gameController.onPlayerClickChessPiece(getChessboardPoint(e.getPoint()), (WolfChessComponent) clickedComponent.getComponents()[1]);
+                }
             }
         }
     }

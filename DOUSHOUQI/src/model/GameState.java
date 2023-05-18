@@ -61,8 +61,9 @@ public class GameState implements Serializable {
     public PlayerColor getCurrentPlayer(){
         if(isPlayer1Turn){
             return player1.getColor();
-        return player2.getColor(); 
         }
+        return player2.getColor(); 
+    }
 
     //get the move count
     public int getMoveCount() {

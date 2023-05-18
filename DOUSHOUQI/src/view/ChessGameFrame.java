@@ -9,6 +9,10 @@ import model.Constant;
 import model.GameState;
 import model.Player;
 import model.PlayerColor;
+import theme.BlueTheme;
+import theme.GreenTheme;
+import theme.RedTheme;
+import theme.Theme;
 
 import java.awt.*;
 
@@ -17,8 +21,8 @@ import java.awt.*;
  */
 public class ChessGameFrame extends JFrame {
     //    public final Dimension FRAME_SIZE ;
-    private final int WIDTH;
-    private final int HEIGTH;
+    public final int WIDTH;
+    public final int HEIGTH;
 
     private final int ONE_CHESS_SIZE;
 
