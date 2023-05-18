@@ -40,9 +40,9 @@ public class LeopardChessComponent extends JChessComponent{
     protected void paintComponent(Graphics g) {
         String filePath = null;
         if(owner == PlayerColor.BLUE){
-            filePath = "D:\\Users\\xiong\\Desktop\\DouShouQi\\DOUSHOUQI\\resource\\leopard-blue.png";
+            filePath = "DOUSHOUQI\\resource\\leopard-blue.png";
         }else if (owner == PlayerColor.RED){
-            filePath = "D:\\Users\\xiong\\Desktop\\DouShouQi\\DOUSHOUQI\\resource\\leopard-red.png";
+            filePath = "DOUSHOUQI\\resource\\leopard-red.png";
         }
         
         File file = new File(filePath);

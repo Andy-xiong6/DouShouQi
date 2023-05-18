@@ -39,9 +39,9 @@ public class WolfChessComponent extends JChessComponent{
     protected void paintComponent(Graphics g) {
         String filePath = null;
         if(owner == PlayerColor.BLUE){
-            filePath = "D:\\Users\\xiong\\Desktop\\DouShouQi\\DOUSHOUQI\\resource\\wolf-blue.png";
+            filePath = "DOUSHOUQI\\resource\\wolf-blue.png";
         }else if (owner == PlayerColor.RED){
-            filePath = "D:\\Users\\xiong\\Desktop\\DouShouQi\\DOUSHOUQI\\resource\\wolf-red.png";
+            filePath = "DOUSHOUQI\\resource\\wolf-red.png";
         }
         
         File file = new File(filePath);

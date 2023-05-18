@@ -37,9 +37,9 @@ public class CatChessComponent extends JChessComponent{
     protected void paintComponent(Graphics g) {
         String filePath = null;
         if(owner == PlayerColor.BLUE){
-            filePath = "D:\\Users\\xiong\\Desktop\\DouShouQi\\DOUSHOUQI\\resource\\cat-blue.png";
+            filePath = "DOUSHOUQI\\resource\\cat-blue.png";
         }else if (owner == PlayerColor.RED){
-            filePath = "D:\\Users\\xiong\\Desktop\\DouShouQi\\DOUSHOUQI\\resource\\cat-red.png";
+            filePath = "DOUSHOUQI\\resource\\cat-red.png";
         }
         
         File file = new File(filePath);

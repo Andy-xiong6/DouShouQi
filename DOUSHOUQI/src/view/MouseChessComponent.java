@@ -40,9 +40,9 @@ public class MouseChessComponent extends JChessComponent{
     protected void paintComponent(Graphics g) {
         String filePath = null;
         if(owner == PlayerColor.BLUE){
-            filePath = "D:\\Users\\xiong\\Desktop\\DouShouQi\\DOUSHOUQI\\resource\\mouse-blue.png";
+            filePath = "DOUSHOUQI\\resource\\mouse-blue.png";
         }else if (owner == PlayerColor.RED){
-            filePath = "D:\\Users\\xiong\\Desktop\\DouShouQi\\DOUSHOUQI\\resource\\mouse-red.png";
+            filePath = "DOUSHOUQI\\resource\\mouse-red.png";
         }
         
         File file = new File(filePath);

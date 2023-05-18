@@ -40,9 +40,9 @@ public class DogChessComponent extends JChessComponent {
     protected void paintComponent(Graphics g) {
         String filePath = null;
         if(owner == PlayerColor.BLUE){
-            filePath = "D:\\Users\\xiong\\Desktop\\DouShouQi\\DOUSHOUQI\\resource\\dog-blue.png";
+            filePath = "DOUSHOUQI\\resource\\dog-blue.png";
         }else if (owner == PlayerColor.RED){
-            filePath = "D:\\Users\\xiong\\Desktop\\DouShouQi\\DOUSHOUQI\\resource\\dog-red.png";
+            filePath = "DOUSHOUQI\\resource\\dog-red.png";
         }
         
         File file = new File(filePath);

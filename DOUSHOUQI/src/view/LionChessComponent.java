@@ -41,9 +41,9 @@ public class LionChessComponent extends JChessComponent{
     protected void paintComponent(Graphics g) {
         String filePath = null;
         if(owner == PlayerColor.BLUE){
-            filePath = "D:\\Users\\xiong\\Desktop\\DouShouQi\\DOUSHOUQI\\resource\\lion-blue.png";
+            filePath = "DOUSHOUQI\\resource\\lion-blue.png";
         }else if (owner == PlayerColor.RED){
-            filePath = "D:\\Users\\xiong\\Desktop\\DouShouQi\\DOUSHOUQI\\resource\\lion-red.png";
+            filePath = "DOUSHOUQI\\resource\\lion-red.png";
         }
         
         File file = new File(filePath);

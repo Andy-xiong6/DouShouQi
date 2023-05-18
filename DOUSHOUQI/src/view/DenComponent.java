@@ -24,9 +24,9 @@ public class DenComponent extends JComponent {
     protected void paintComponent(Graphics g) {
         String filePath = null;
         if(owner == PlayerColor.BLUE){
-            filePath = "D:\\Users\\xiong\\Desktop\\DouShouQi\\DOUSHOUQI\\resource\\den-blue.png";
+            filePath = "DOUSHOUQI\\resource\\den-blue.png";
         }else if (owner == PlayerColor.RED){
-            filePath = "D:\\Users\\xiong\\Desktop\\DouShouQi\\DOUSHOUQI\\resource\\den-red.png";
+            filePath = "DOUSHOUQI\\resource\\den-red.png";
         }
         
         File file = new File(filePath);
