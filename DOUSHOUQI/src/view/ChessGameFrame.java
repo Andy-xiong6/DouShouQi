@@ -25,6 +25,7 @@ public class ChessGameFrame extends JFrame {
     private JButton saveButton;
     private JButton loadButton;
     private JButton restartButton;
+    private JButton changeThemeButton;
 
     private GameState gameState;
     private GameController gameController;
@@ -54,6 +55,7 @@ public class ChessGameFrame extends JFrame {
         theme.changeButtonAppearance(saveButton);
         theme.changeButtonAppearance(loadButton);
         theme.changeButtonAppearance(restartButton);
+        theme.changeButtonAppearance(changeThemeButton);
         
     }
 
@@ -90,9 +92,57 @@ public class ChessGameFrame extends JFrame {
         restartButton.addActionListener(e -> restartGame());
         restartButton.setBounds(800, 600, 150, 50);
         add(restartButton);
+
+        changeThemeButton = new JButton("切换主题");
+        changeThemeButton.addActionListener(e -> showThemeDialog());
+        changeThemeButton.setBounds(800, 400, 150, 50);
+        add(changeThemeButton);
         
         setTheme(new BlueTheme());
         
+    }
+
+    private void showThemeDialog() {
+        JDialog themeDialog = new JDialog(this, "选择主题", true);
+        themeDialog.setSize(300, 200);
+        themeDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        JButton blueThemeButton = new JButton("蓝色主题");
+        blueThemeButton.setForeground(Color.BLUE);
+        blueThemeButton.setBackground(Color.WHITE);
+        blueThemeButton.addActionListener(e -> {
+            this.backgroundLabel.setIcon(null);
+            setTheme(new BlueTheme());
+            themeDialog.dispose();
+            repaint();
+        });
+        JButton redThemeButton = new JButton("红色主题");
+        redThemeButton.setForeground(Color.RED);
+        redThemeButton.setBackground(Color.WHITE);
+        redThemeButton.addActionListener(e -> {
+            this.backgroundLabel.setIcon(null);
+            setTheme(new RedTheme());
+            themeDialog.dispose();
+            repaint();
+        });
+        JButton greenThemeButton = new JButton("绿色主题");
+        greenThemeButton.setForeground(Color.GREEN);
+        greenThemeButton.setBackground(Color.WHITE);
+        greenThemeButton.addActionListener(e -> {
+            this.backgroundLabel.setIcon(null);
+            setTheme(new GreenTheme());
+            themeDialog.dispose();
+            repaint();
+        });
+        JPanel themePanel = new JPanel();
+        themePanel.setLayout(new GridLayout(3, 1));
+        themePanel.add(blueThemeButton);
+        themePanel.add(redThemeButton);
+        themePanel.add(greenThemeButton);
+        themeDialog.add(themePanel);
+        themeDialog.setLocationRelativeTo(null);
+        themeDialog.setVisible(true);
+
+
     }
 
     private void saveGameState(){
