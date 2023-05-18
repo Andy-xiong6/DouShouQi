@@ -24,11 +24,39 @@ public class ChessGameFrame extends JFrame {
 
     private JButton saveButton;
     private JButton loadButton;
+    private JButton restartButton;
 
     private GameState gameState;
     private GameController gameController;
 
     private ChessboardComponent chessboardComponent;
+    private Theme theme;
+    private JLabel backgroundLabel;
+
+    public void setTheme(Theme theme) {
+        this.theme = theme;
+        Image backgroundImage = theme.getBackgroundImage();
+        if(backgroundImage != null){
+            backgroundLabel = new JLabel();
+            ImageIcon backgroundIcon = new ImageIcon(backgroundImage);
+            Image scaledImage = backgroundIcon.getImage().getScaledInstance(WIDTH, HEIGTH, Image.SCALE_DEFAULT);
+            ImageIcon scaledIcon = new ImageIcon(scaledImage);
+            backgroundLabel.setIcon(scaledIcon);
+            JPanel contentPanel = (JPanel) getContentPane();
+            contentPanel.setLayout(new BorderLayout());
+            contentPanel.add(backgroundLabel, BorderLayout.CENTER);
+            System.out.println("set background image");
+        }else {
+            backgroundLabel.setIcon(null);
+            backgroundLabel.setBackground(theme.getBackgroundColor());
+            System.out.println("set background color");
+        }
+        theme.changeButtonAppearance(saveButton);
+        theme.changeButtonAppearance(loadButton);
+        theme.changeButtonAppearance(restartButton);
+        
+    }
+
     public ChessGameFrame(int width, int height, GameState gameState) {
         setTitle("天天趣味斗兽棋"); //设置标题
         this.WIDTH = width;
@@ -41,12 +69,10 @@ public class ChessGameFrame extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //设置程序关闭按键，如果点击右上方的叉就游戏全部关闭了
         setLayout(null);
 
-
         addChessboard();
         addLabel();
-        addLoadButton();
-
         
+
         gameController = new GameController(chessboardComponent, gameState.getChessboard() ,gameState.getPlayer1(), gameState.getPlayer2());
         gameController.setState(gameState);
 
@@ -57,14 +83,15 @@ public class ChessGameFrame extends JFrame {
 
         loadButton = new JButton("加载游戏");
         loadButton.addActionListener(e -> loadGameState());
-        loadButton.setBounds(950, 500, 150, 50);
+        loadButton.setBounds(800, 500, 150, 50);
         add(loadButton);
-
-        JButton restartButton = new JButton("重新开始");
+        
+        restartButton = new JButton("重新开始");
         restartButton.addActionListener(e -> restartGame());
-        restartButton.setBounds(950, 600, 150, 50);
+        restartButton.setBounds(800, 600, 150, 50);
         add(restartButton);
-
+        
+        setTheme(new DarkTheme());
         
     }
 
@@ -129,16 +156,5 @@ public class ChessGameFrame extends JFrame {
         add(statusLabel);
     }
 
-    /**
-     * 在游戏面板中增加一个按钮，如果按下的话就会显示Hello, world!
-     */
 
-    private void addLoadButton() {
-        JButton button = new JButton("Hello");
-        button.addActionListener((e) -> JOptionPane.showMessageDialog(this, "保存成功！"));
-        button.setLocation(HEIGTH, HEIGTH / 10 + 120);
-        button.setSize(200, 60);
-        button.setFont(new Font("Rockwell", Font.BOLD, 20));
-        add(button);
-    }
 }

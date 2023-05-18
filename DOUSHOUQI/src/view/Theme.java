@@ -1,8 +1,14 @@
 package view;
+import java.awt.Color;
+import java.awt.Image;
 
-public class Theme {
-    public static Theme[] themes;
+import javax.swing.JButton;
 
-    public static Theme currenTheme;
-    
+public interface Theme {
+    public Color getBackgroundColor();
+
+    public void changeButtonAppearance(JButton button);
+
+    public Image getBackgroundImage();
+
 }
