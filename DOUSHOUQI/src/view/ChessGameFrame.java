@@ -91,7 +91,7 @@ public class ChessGameFrame extends JFrame {
         restartButton.setBounds(800, 600, 150, 50);
         add(restartButton);
         
-        setTheme(new DarkTheme());
+        setTheme(new BlueTheme());
         
     }
 

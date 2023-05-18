@@ -10,7 +10,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-public class DarkTheme implements Theme{
+public class BlueTheme implements Theme{
     @Override
     public Color getBackgroundColor() {
         return Color.BLACK;
@@ -19,12 +19,13 @@ public class DarkTheme implements Theme{
     @Override
     public void changeButtonAppearance(JButton button) {
         button.setForeground(Color.WHITE);
-        button.setBackground(Color.DARK_GRAY);
+        Color darkBlue = new Color(0, 0, 139);
+        button.setBackground(darkBlue);
     }
 
     @Override
     public Image getBackgroundImage() {
-        String filePath = "DOUSHOUQI\\resource\\background.png";
+        String filePath = "DOUSHOUQI\\resource\\background2.png";
         File file = new File(filePath);
         BufferedImage image = null;
         try {
