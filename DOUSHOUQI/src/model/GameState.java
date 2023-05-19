@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class GameState implements Serializable {
     private static final long serialVersionUID = 1L;
-    private Chessboard chessboard;
+    private Chessboard chessboard = new Chessboard();
     private Player player1;
     private Player player2;
     private PlayerColor currentPlayer;

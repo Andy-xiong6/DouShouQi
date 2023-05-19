@@ -223,7 +223,7 @@ public class ChessGameFrame extends JFrame {
         chessboardComponent.clear();
         chessboardComponent.revalidate();
         chessboardComponent.repaint();
-        GameController gameController = new GameController(chessboardComponent, new Chessboard(), new Player("玩家1", PlayerColor.BLUE), new Player("玩家2", PlayerColor.RED), PlayerColor.BLUE, gameRecorder);
+        GameController gameController = new GameController(chessboardComponent, new Chessboard(), new Player("玩家1", PlayerColor.BLUE), new Player("玩家2", PlayerColor.RED), PlayerColor.BLUE, new GameRecorder(new GameState()));
         gameController.setChessGameFrame(this);
         playerLabel.setVisible(false);
     }
@@ -272,7 +272,7 @@ public class ChessGameFrame extends JFrame {
         playerLabel.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(playerLabel);
 
-        roundLabel = new JLabel("回合数：" /*+ gameState.getRound()*/);
+        roundLabel = new JLabel("回合数：" + (gameRecorder.index+1));
         roundLabel.setLocation(870, HEIGTH / 10 + -85);
         roundLabel.setSize(200, 60);
         roundLabel.setFont(new Font("Rockwell", Font.BOLD, 20));

@@ -36,6 +36,7 @@ public class GameController implements GameListener, Serializable{
     private Player player2;
     public GameRecorder gameRecorder;
     private GameState gameState;
+    public int moveCount;
 
     // Record whether there is a selected piece before
     private ChessboardPoint selectedPoint;
@@ -63,16 +64,10 @@ public class GameController implements GameListener, Serializable{
     }
 
     private void initialize(Chessboard model) {
-        if(gameRecorder.index == 0){
-            model.initPieces();
-            System.out.println("init Pieces");
-            System.out.println("index: " + gameRecorder.index);
-        }else {
-            model = gameRecorder.currentGameState.getChessboard();
-            model.initPieces(model);
-            System.out.println("load pieces");
-            System.out.println("index: " + gameRecorder.index);
-        }
+        model = gameRecorder.currentGameState.getChessboard();
+        model.initPieces(model);
+        System.out.println("load pieces");
+        System.out.println("index: " + gameRecorder.index);
         view.initiateChessComponent(model);
     }
     
@@ -86,6 +81,7 @@ public class GameController implements GameListener, Serializable{
         gameState.setCurrentPlayer(currentPlayer);
         chessGameFrame.timerLabel.switchPlayer();
         chessGameFrame.switchPlayer();
+        chessGameFrame.roundLabel.setText("回合数：" + ((gameRecorder.index)/2 + 1));
         view.repaint();
     }
 

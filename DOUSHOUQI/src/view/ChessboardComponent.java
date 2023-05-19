@@ -95,21 +95,17 @@ public class ChessboardComponent extends JComponent {
                     if(new ChessboardPoint(i, j).isBlueSide()){
                         gridComponents[i][j].add(
                             new TrapComponent(PlayerColor.BLUE));
-                            System.out.println("blue trap");
                     }else if (!new ChessboardPoint(i, j).isBlueSide()) {
                         gridComponents[i][j].add(
                             new TrapComponent(PlayerColor.RED));
-                            System.out.println("red trap");
                     }
                 }else if (new ChessboardPoint(i, j).isDen()) {
                     if(new ChessboardPoint(i, j).isBlueSide()){
                         gridComponents[i][j].add(
                             new DenComponent(PlayerColor.BLUE));
-                            System.out.println("blue den");
                     }else if (!new ChessboardPoint(i, j).isBlueSide()) {
                         gridComponents[i][j].add(
                             new DenComponent(PlayerColor.RED));
-                            System.out.println("red den");
                     }
                 }
             }
