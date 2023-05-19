@@ -30,9 +30,4 @@ public class RuleFrame extends JFrame {
         setLocationRelativeTo(null); // 居中显示
         setVisible(true);
     }
-
-    public static void main(String[] args) throws IOException {
-        File file = new File("DOUSHOUQI\\resource\\rule.txt");
-        new RuleFrame(file);
-    }
 }
