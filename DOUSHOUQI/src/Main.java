@@ -2,10 +2,8 @@ import model.Chessboard;
 import model.GameState;
 import model.Player;
 import model.PlayerColor;
-import view.ChessGameFrame;
-import view.MainMenuFrame;
-
 import javax.swing.*;
+import frame.MainMenuFrame;
 
 public class Main {
     public static void main(String[] args) {

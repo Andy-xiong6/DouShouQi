@@ -1,4 +1,4 @@
-package view;
+package frame;
 import javax.swing.*;
 import java.io.*;
 

@@ -1,11 +1,8 @@
-package view;
-
+package frame;
 import javax.swing.*;
-
 import controller.GameController;
 import controller.Saver;
 import model.Chessboard;
-import model.Constant;
 import model.GameState;
 import model.Player;
 import model.PlayerColor;
@@ -13,6 +10,7 @@ import theme.BlueTheme;
 import theme.GreenTheme;
 import theme.RedTheme;
 import theme.Theme;
+import view.ChessboardComponent;
 
 import java.awt.*;
 

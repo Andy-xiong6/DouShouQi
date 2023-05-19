@@ -1,5 +1,4 @@
-package view;
-
+package frame;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -10,12 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-
 import javax.swing.*;
 import javax.swing.JFrame;
-import javax.swing.border.Border;
-
-import audio.Sound;
 import model.GameState;
 
 public class MainMenuFrame extends JFrame{
@@ -53,8 +48,6 @@ public class MainMenuFrame extends JFrame{
         mainPanel.setAlignmentY(Component.CENTER_ALIGNMENT);
         mainPanel.setOpaque(false);
         mainPanel.setBackground(new Color(255, 255, 255));
-
-
         add(mainPanel, BorderLayout.CENTER);
         
 
