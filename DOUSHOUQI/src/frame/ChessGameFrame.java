@@ -47,6 +47,7 @@ public class ChessGameFrame extends JFrame {
     public JLabel playerLabel;
     public ChessTimeLabel timerLabel;
     public JLabel roundLabel;
+    public JLabel statusLabel;
 
     public void setTheme(Theme theme) {
         this.theme = theme;
@@ -70,6 +71,10 @@ public class ChessGameFrame extends JFrame {
         theme.changeButtonAppearance(loadButton);
         theme.changeButtonAppearance(restartButton);
         theme.changeButtonAppearance(changeThemeButton);
+        theme.changeLabelAppearance(playerLabel);
+        theme.changeLabelAppearance(roundLabel);
+        theme.changeLabelAppearance(timerLabel);
+        theme.changeLabelAppearance(statusLabel);
         
     }
 
@@ -216,7 +221,7 @@ public class ChessGameFrame extends JFrame {
      * 在游戏面板中添加标签
      */
     private void addLabel() {
-        JLabel statusLabel = new JLabel("计时器");
+        statusLabel = new JLabel("计时器");
         statusLabel.setLocation(920, HEIGTH / 10);
         statusLabel.setSize(200, 60);
         statusLabel.setFont(new Font("Rockwell", Font.BOLD, 20));

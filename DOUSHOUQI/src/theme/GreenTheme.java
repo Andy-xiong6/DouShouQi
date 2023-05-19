@@ -9,6 +9,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 
 public class GreenTheme implements Theme {
     @Override
@@ -34,6 +35,11 @@ public class GreenTheme implements Theme {
             e.printStackTrace();
         }
         return image;
+    }
+
+    @Override
+    public void changeLabelAppearance(JLabel label) {
+        label.setForeground(new Color(0, 100, 0));
     }
     
 }
