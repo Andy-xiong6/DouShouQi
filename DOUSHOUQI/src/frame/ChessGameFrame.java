@@ -46,6 +46,7 @@ public class ChessGameFrame extends JFrame {
     private JLabel backgroundLabel;
     public JLabel playerLabel;
     public ChessTimeLabel timerLabel;
+    public JLabel roundLabel;
 
     public void setTheme(Theme theme) {
         this.theme = theme;
@@ -237,6 +238,12 @@ public class ChessGameFrame extends JFrame {
         playerLabel.setSize(200, 60);
         playerLabel.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(playerLabel);
+
+        roundLabel = new JLabel("回合数：" /*+ gameState.getRound()*/);
+        roundLabel.setLocation(870, HEIGTH / 10 + -85);
+        roundLabel.setSize(200, 60);
+        roundLabel.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(roundLabel);
     }
 
     public void switchPlayer() {
