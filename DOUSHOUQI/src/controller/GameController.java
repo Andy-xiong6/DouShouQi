@@ -206,7 +206,7 @@ public class GameController implements GameListener, Serializable{
                 component.repaint();
             }
     
-            if(selectedPoint != null && point != null && !selectedPoint.equals(point)){
+            if(selectedPoint != null && point != null && !selectedPoint.equals(point) && model.isValidMove(selectedPoint, point)){
                 if(model.getChessPieceAt(selectedPoint).canCapture(model.getChessPieceAt(point))){
                     Sound.eat();
                     view.removeChessComponentAtGrid(point);

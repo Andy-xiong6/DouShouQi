@@ -111,7 +111,7 @@ public class Chessboard implements Serializable {
     }
 
     public boolean isValidMove(ChessboardPoint src, ChessboardPoint dest) {
-        if (getChessPieceAt(src) == null || getChessPieceAt(dest) != null) {
+        if (getChessPieceAt(src) == null) {
             return false;
         }
 
