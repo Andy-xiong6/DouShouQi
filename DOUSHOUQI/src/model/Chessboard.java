@@ -2,7 +2,6 @@ package model;
 
 import java.io.Serializable;
 
-import audio.Sound;
 
 /**
  * This class store the real chess information.

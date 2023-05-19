@@ -1,8 +1,10 @@
 package frame;
 import javax.swing.*;
+
+import Record.GameRecorder;
+import Record.Saver;
 import audio.Sound;
 import controller.GameController;
-import controller.Saver;
 import model.Chessboard;
 import model.GameState;
 import model.Player;
@@ -30,6 +32,7 @@ public class ChessGameFrame extends JFrame {
     private JButton restartButton;
     private JButton changeThemeButton;
 
+    public GameRecorder gameRecorder;
     private GameState gameState;
     private GameController gameController;
 
@@ -40,6 +43,7 @@ public class ChessGameFrame extends JFrame {
     public ChessTimeLabel timerLabel;
     public JLabel roundLabel;
     public JLabel statusLabel;
+    
 
     public void setTheme(Theme theme) {
         this.theme = theme;
@@ -69,15 +73,16 @@ public class ChessGameFrame extends JFrame {
     }
 
     public ChessGameFrame(int width, int height, GameState gameState) {
-        setTitle("天天趣味斗兽棋"); //设置标题
+        setTitle("天天趣味斗兽棋"); 
         this.WIDTH = width;
         this.HEIGTH = height;
         this.ONE_CHESS_SIZE = (HEIGTH * 4 / 5) / 9;
         this.gameState = gameState;
+        gameRecorder = new GameRecorder(gameState);
 
         setSize(WIDTH, HEIGTH);
         setLocationRelativeTo(null); // Center the window.
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //设置程序关闭按键，如果点击右上方的叉就游戏全部关闭了
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLayout(null);
 
         addChessboard();
@@ -157,14 +162,21 @@ public class ChessGameFrame extends JFrame {
     }
 
     private void saveGameState(){
-        Saver.save(gameState, "gamestate.ser");
+        Saver.save(gameRecorder, "gamestate.ser");
         JOptionPane.showMessageDialog(this,"保存成功！");
     }
 
     private void loadGameState(){
         gameController.model.clear();
         chessboardComponent.clear();
-        GameState newGameState = Saver.load("gamestate.ser");
+        GameRecorder gameRecorder = (GameRecorder) Saver.load("gamestate.ser");
+        if(gameRecorder == null){
+            JOptionPane.showMessageDialog(this, "没有发现存档");
+            return;
+        }else {
+            System.out.println("load success");
+        }
+        GameState newGameState = gameRecorder.currentGameState;
         if(newGameState == null){
             JOptionPane.showMessageDialog(this, "没有发现存档");
             return;

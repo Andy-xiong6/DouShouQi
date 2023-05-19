@@ -1,7 +1,10 @@
 package controller;
 
+import java.io.Serializable;
+
 import javax.swing.JOptionPane;
 
+import Record.GameRecorder;
 import audio.Sound;
 import frame.ChessGameFrame;
 import listener.GameListener;
@@ -22,7 +25,7 @@ import model.Player;
  * [in this demo the request methods are onPlayerClickCell() and onPlayerClickChessPiece()]
  *
 */
-public class GameController implements GameListener {
+public class GameController implements GameListener, Serializable{
 
 
     public Chessboard model;
@@ -31,6 +34,7 @@ public class GameController implements GameListener {
     private PlayerColor currentPlayer;
     private Player player1;
     private Player player2;
+    public GameRecorder gameRecorder;
     private GameState gameState;
 
     // Record whether there is a selected piece before
@@ -158,14 +162,14 @@ public class GameController implements GameListener {
             view.setChessComponentAtGrid(point, view.removeChessComponentAtGrid(selectedPoint));
             selectedPoint = null;
             swapColor();
+            view.setTrap();
+            view.revalidate();
             view.repaint();
             if(getWinner() == PlayerColor.BLUE) {
                 JOptionPane.showMessageDialog(null, "Blue wins!");
             }else if(getWinner() == PlayerColor.RED) {
                 JOptionPane.showMessageDialog(null, "Red wins!");
             }
-            
-            
         }
     }
 
@@ -196,6 +200,7 @@ public class GameController implements GameListener {
                     view.setChessComponentAtGrid(point, view.removeChessComponentAtGrid(selectedPoint));
                     selectedPoint = null;
                     swapColor();
+                    view.revalidate();
                     view.repaint();
                     getWinner();
                 }

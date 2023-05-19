@@ -1,11 +1,8 @@
 package view;
 
-import java.awt.Dimension;
 import java.text.SimpleDateFormat;
-
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-
 import model.GameState;
 import model.PlayerColor;
 

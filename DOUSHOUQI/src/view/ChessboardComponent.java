@@ -1,16 +1,13 @@
 package view;
 
-
 import controller.GameController;
 import model.*;
-
 import javax.swing.*;
-import javax.swing.plaf.metal.MetalIconFactory.FolderIcon16;
-
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ForkJoinPool;
 
 import static model.Constant.CHESSBOARD_COL_SIZE;
 import static model.Constant.CHESSBOARD_ROW_SIZE;
@@ -152,6 +149,21 @@ public class ChessboardComponent extends JComponent {
                     this.add(cell);
                 }
                 gridComponents[i][j] = cell;
+            }
+        }
+    }
+
+    public void setTrap() {
+        for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
+            for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
+                if(new ChessboardPoint(i, j).isTrap() && gridComponents[i][j].getComponentCount() == 0){
+                    if(new ChessboardPoint(i, j).isBlueSide()){
+                        gridComponents[i][j].add(new TrapComponent(PlayerColor.BLUE));
+                    }else if (!new ChessboardPoint(i, j).isBlueSide()) {
+                        gridComponents[i][j].add(new TrapComponent(PlayerColor.RED));
+                    }
+                    
+                }
             }
         }
     }
