@@ -109,7 +109,7 @@ public class GameController implements GameListener, Serializable{
         }
         if(allRedDead) {
             return PlayerColor.BLUE;
-        }else if( allBlueDead) {
+        }else if(allBlueDead) {
             return PlayerColor.RED;
         }
         return null;
@@ -177,9 +177,10 @@ public class GameController implements GameListener, Serializable{
             view.revalidate();
             view.repaint();
             if(getWinner() == PlayerColor.BLUE) {
-                JOptionPane.showMessageDialog(null, "Blue wins!");
+                JOptionPane.showMessageDialog(null, "Blue wins!", "游戏结束", JOptionPane.PLAIN_MESSAGE);
+                
             }else if(getWinner() == PlayerColor.RED) {
-                JOptionPane.showMessageDialog(null, "Red wins!");
+                JOptionPane.showMessageDialog(null, "Red wins!", "游戏结束", JOptionPane.PLAIN_MESSAGE);
             }
         }
     }

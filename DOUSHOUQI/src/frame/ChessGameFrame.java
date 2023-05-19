@@ -159,6 +159,7 @@ public class ChessGameFrame extends JFrame {
         themePanel.add(greenThemeButton);
         themeDialog.add(themePanel);
         themeDialog.setLocationRelativeTo(null);
+        themeDialog.setTitle("选择主题");
         themeDialog.setVisible(true);
 
 
@@ -167,17 +168,6 @@ public class ChessGameFrame extends JFrame {
     private void saveGameState(){
         Saver.save(gameRecorder, "gamestate.ser");
         JOptionPane.showMessageDialog(this,"保存成功！");
-        for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
-            for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
-                if(gameState.getChessboard().getGrid()[i][j].getPiece() != null){
-                    System.out.print(gameState.getChessboard().getGrid()[i][j].getPiece().getName().toString() + " ");
-                }else{
-                    System.out.print("null ");
-                }
-                
-            }
-            System.out.println( );
-        }
     }
 
     private void loadGameState(){
@@ -196,25 +186,12 @@ public class ChessGameFrame extends JFrame {
             return;
         }
         gameState = newGameState;
-        
-        for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
-            for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
-                if(gameState.getChessboard().getGrid()[i][j].getPiece() != null){
-                    System.out.print(gameState.getChessboard().getGrid()[i][j].getPiece().getName().toString() + " ");
-                }else{
-                    System.out.print("null ");
-                }
-            }
-            System.out.println( );
-        }
     
         gameController = new GameController(chessboardComponent, gameState.getChessboard() ,gameState.getPlayer1(), gameState.getPlayer2(), gameState.getCurrentPlayer(), gameRecorder);
         gameController.setChessGameFrame(this);
         chessboardComponent.revalidate();
         chessboardComponent.repaint();
         JOptionPane.showMessageDialog(this, "加载成功！");
-        
-        
     }
 
     private void restartGame(){
