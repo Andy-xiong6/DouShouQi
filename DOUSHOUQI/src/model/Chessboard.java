@@ -53,6 +53,16 @@ public class Chessboard implements Serializable {
         grid[2][0].setPiece(new ChessPiece(PlayerColor.RED, "Mouse",1));
     }
 
+    public void initPieces(Chessboard chessboard) {
+        for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
+            for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
+                if(chessboard.getGridAt(new ChessboardPoint(i, j)).getPiece() != null){
+                    grid[i][j].setPiece(chessboard.getGridAt(new ChessboardPoint(i, j)).getPiece());
+                }   
+            }
+        }
+    }
+
     public ChessPiece getChessPieceAt(ChessboardPoint point) {
         return getGridAt(point).getPiece();
     }

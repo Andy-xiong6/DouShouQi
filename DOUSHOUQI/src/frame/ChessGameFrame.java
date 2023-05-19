@@ -15,7 +15,10 @@ import theme.RedTheme;
 import theme.Theme;
 import view.ChessTimeLabel;
 import view.ChessboardComponent;
+import view.ElephantChessComponent;
+
 import java.awt.*;
+import model.Constant;
 
 /**
  * 这个类表示游戏过程中的整个游戏界面，是一切的载体
@@ -90,7 +93,7 @@ public class ChessGameFrame extends JFrame {
         addPlayerLabel();
         
 
-        gameController = new GameController(chessboardComponent, gameState.getChessboard() ,gameState.getPlayer1(), gameState.getPlayer2(), gameState.getCurrentPlayer());
+        gameController = new GameController(chessboardComponent, gameState.getChessboard() ,gameState.getPlayer1(), gameState.getPlayer2(), gameState.getCurrentPlayer(), gameRecorder);
         gameController.setChessGameFrame(this);
         gameController.setState(gameState);
 
@@ -164,6 +167,17 @@ public class ChessGameFrame extends JFrame {
     private void saveGameState(){
         Saver.save(gameRecorder, "gamestate.ser");
         JOptionPane.showMessageDialog(this,"保存成功！");
+        for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
+            for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
+                if(gameState.getChessboard().getGrid()[i][j].getPiece() != null){
+                    System.out.print(gameState.getChessboard().getGrid()[i][j].getPiece().getName().toString() + " ");
+                }else{
+                    System.out.print("null ");
+                }
+                
+            }
+            System.out.println( );
+        }
     }
 
     private void loadGameState(){
@@ -182,23 +196,34 @@ public class ChessGameFrame extends JFrame {
             return;
         }
         gameState = newGameState;
-
-        //FIXME: 重新加载棋盘 ; 已经确定chessboard、grid、chesspiece都是没有问题的，应该是添加component的地方有问题,且之前的grid没有删除
         
-        //chessboardComponent.initiateChessComponent(gameState.getChessboard());
-        gameController = new GameController(chessboardComponent, gameState.getChessboard(), gameState.getPlayer1(), gameState.getPlayer2(), gameState.getCurrentPlayer());
+        for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
+            for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
+                if(gameState.getChessboard().getGrid()[i][j].getPiece() != null){
+                    System.out.print(gameState.getChessboard().getGrid()[i][j].getPiece().getName().toString() + " ");
+                }else{
+                    System.out.print("null ");
+                }
+            }
+            System.out.println( );
+        }
+    
+        gameController = new GameController(chessboardComponent, gameState.getChessboard() ,gameState.getPlayer1(), gameState.getPlayer2(), gameState.getCurrentPlayer(), gameRecorder);
+        gameController.setChessGameFrame(this);
         chessboardComponent.revalidate();
         chessboardComponent.repaint();
         JOptionPane.showMessageDialog(this, "加载成功！");
         
+        
     }
 
     private void restartGame(){
+
         GameState gameState = new GameState(new Chessboard(), new Player("玩家1", PlayerColor.BLUE), new Player("玩家2", PlayerColor.RED), PlayerColor.BLUE, 0);
         chessboardComponent.clear();
         chessboardComponent.revalidate();
         chessboardComponent.repaint();
-        GameController gameController = new GameController(chessboardComponent, gameState.getChessboard(), gameState.getPlayer1(), gameState.getPlayer2(), gameState.getCurrentPlayer());
+        GameController gameController = new GameController(chessboardComponent, new Chessboard(), new Player("玩家1", PlayerColor.BLUE), new Player("玩家2", PlayerColor.RED), PlayerColor.BLUE, gameRecorder);
         gameController.setChessGameFrame(this);
         playerLabel.setVisible(false);
     }

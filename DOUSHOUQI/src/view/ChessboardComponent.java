@@ -7,7 +7,6 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.ForkJoinPool;
 
 import static model.Constant.CHESSBOARD_COL_SIZE;
 import static model.Constant.CHESSBOARD_ROW_SIZE;
@@ -51,42 +50,42 @@ public class ChessboardComponent extends JComponent {
         for (int i = 0; i < CHESSBOARD_ROW_SIZE.getNum(); i++) {
             for (int j = 0; j < CHESSBOARD_COL_SIZE.getNum(); j++) {
                 if(grid[i][j].getPiece() != null){
-                    if (grid[i][j].getPiece().getName() == "Elephant") {
+                    if (grid[i][j].getPiece().getName().equals("Elephant")) {
                         ChessPiece chessPiece = grid[i][j].getPiece();
                         System.out.println(chessPiece.getOwner());
                         gridComponents[i][j].add(
                                 new ElephantChessComponent(chessPiece.getOwner(),CHESS_SIZE));                  
-                    }else if(grid[i][j].getPiece().getName() == "Cat"){
+                    } else if(grid[i][j].getPiece().getName().equals("Cat")){
                         ChessPiece chessPiece = grid[i][j].getPiece();
                         System.out.println(chessPiece.getOwner());
                         gridComponents[i][j].add(
                                 new CatChessComponent(chessPiece.getOwner(),CHESS_SIZE));
-                    }else if(grid[i][j].getPiece().getName() == "Dog"){
+                    } else if(grid[i][j].getPiece().getName().equals("Dog")){
                         ChessPiece chessPiece = grid[i][j].getPiece();
                         System.out.println(chessPiece.getOwner());
                         gridComponents[i][j].add(
                                 new DogChessComponent(chessPiece.getOwner(),CHESS_SIZE));
-                    }else if(grid[i][j].getPiece().getName() == "Lion"){
+                    } else if(grid[i][j].getPiece().getName().equals("Lion")){
                         ChessPiece chessPiece = grid[i][j].getPiece();
                         System.out.println(chessPiece.getOwner());
                         gridComponents[i][j].add(
                                 new LionChessComponent(chessPiece.getOwner(),CHESS_SIZE));
-                    }else if(grid[i][j].getPiece().getName() == "Tiger"){
+                    } else if(grid[i][j].getPiece().getName().equals("Tiger")){
                         ChessPiece chessPiece = grid[i][j].getPiece();
                         System.out.println(chessPiece.getOwner());
                         gridComponents[i][j].add(
                                 new TigerChessComponent(chessPiece.getOwner(),CHESS_SIZE));
-                    }else if(grid[i][j].getPiece().getName() == "Mouse"){
+                    } else if(grid[i][j].getPiece().getName().equals("Mouse")){
                         ChessPiece chessPiece = grid[i][j].getPiece();
                         System.out.println(chessPiece.getOwner());
                         gridComponents[i][j].add(
                                 new MouseChessComponent(chessPiece.getOwner(),CHESS_SIZE));
-                    }else if(grid[i][j].getPiece().getName() == "Leopard"){
+                    }else if(grid[i][j].getPiece().getName().equals("Leopard")){
                         ChessPiece chessPiece = grid[i][j].getPiece();
                         System.out.println(chessPiece.getOwner());
                         gridComponents[i][j].add(
                                 new LeopardChessComponent(chessPiece.getOwner(),CHESS_SIZE));
-                    }else if(grid[i][j].getPiece().getName() == "Wolf"){
+                    }else if(grid[i][j].getPiece().getName().equals("Wolf")){
                         ChessPiece chessPiece = grid[i][j].getPiece();
                         System.out.println(chessPiece.getOwner());
                         gridComponents[i][j].add(
@@ -96,17 +95,21 @@ public class ChessboardComponent extends JComponent {
                     if(new ChessboardPoint(i, j).isBlueSide()){
                         gridComponents[i][j].add(
                             new TrapComponent(PlayerColor.BLUE));
+                            System.out.println("blue trap");
                     }else if (!new ChessboardPoint(i, j).isBlueSide()) {
                         gridComponents[i][j].add(
                             new TrapComponent(PlayerColor.RED));
+                            System.out.println("red trap");
                     }
                 }else if (new ChessboardPoint(i, j).isDen()) {
                     if(new ChessboardPoint(i, j).isBlueSide()){
                         gridComponents[i][j].add(
                             new DenComponent(PlayerColor.BLUE));
+                            System.out.println("blue den");
                     }else if (!new ChessboardPoint(i, j).isBlueSide()) {
                         gridComponents[i][j].add(
                             new DenComponent(PlayerColor.RED));
+                            System.out.println("red den");
                     }
                 }
             }

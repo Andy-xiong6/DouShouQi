@@ -40,17 +40,21 @@ public class GameController implements GameListener, Serializable{
     // Record whether there is a selected piece before
     private ChessboardPoint selectedPoint;
 
-    public GameController(ChessboardComponent view, Chessboard model, Player player1, Player player2, PlayerColor currentPlayer) {
+    public GameController(ChessboardComponent view, Chessboard model, Player player1, Player player2, PlayerColor currentPlayer, GameRecorder gameRecorder) {
         this.view = view;
         this.model = model;
         this.player1 = player1;
         this.player2 = player2;
         this.currentPlayer = currentPlayer;
         this.gameState = new GameState();
-
+        if(gameRecorder == null){
+            this.gameRecorder = new GameRecorder(gameState);
+        }else{
+            this.gameRecorder = gameRecorder;
+        }
+        
         view.registerController(this);
         initialize(model);
-        view.initiateChessComponent(model);
         view.repaint();
     }
 
@@ -59,10 +63,19 @@ public class GameController implements GameListener, Serializable{
     }
 
     private void initialize(Chessboard model) {
-        model.initPieces();
+        if(gameRecorder.index == 0){
+            model.initPieces();
+            System.out.println("init Pieces");
+            System.out.println("index: " + gameRecorder.index);
+        }else {
+            model = gameRecorder.currentGameState.getChessboard();
+            model.initPieces(model);
+            System.out.println("load pieces");
+            System.out.println("index: " + gameRecorder.index);
+        }
+        view.initiateChessComponent(model);
     }
     
-
     // after a valid move swap the player
     private void swapColor() {
         if(currentPlayer == PlayerColor.RED) {
@@ -162,6 +175,8 @@ public class GameController implements GameListener, Serializable{
             view.setChessComponentAtGrid(point, view.removeChessComponentAtGrid(selectedPoint));
             selectedPoint = null;
             swapColor();
+            gameRecorder.index++;
+            System.out.println("index: " + gameRecorder.index);
             view.setTrap();
             view.revalidate();
             view.repaint();
@@ -200,6 +215,8 @@ public class GameController implements GameListener, Serializable{
                     view.setChessComponentAtGrid(point, view.removeChessComponentAtGrid(selectedPoint));
                     selectedPoint = null;
                     swapColor();
+                    gameRecorder.index++;
+                    System.out.println("index: " + gameRecorder.index);
                     view.revalidate();
                     view.repaint();
                     getWinner();
