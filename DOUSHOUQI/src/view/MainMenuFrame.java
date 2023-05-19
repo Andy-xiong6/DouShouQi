@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -7,9 +8,12 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.*;
 import javax.swing.JFrame;
+import javax.swing.border.Border;
 
 import audio.Sound;
 import model.GameState;
@@ -17,7 +21,7 @@ import model.GameState;
 public class MainMenuFrame extends JFrame{
     public MainMenuFrame(GameState gameState){
         super("主菜单");
-        setSize(1100, 810);
+        setSize(800, 810);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -27,6 +31,33 @@ public class MainMenuFrame extends JFrame{
         JButton loadButton = new JButton("读取游戏");
         JButton exitButton = new JButton("退出游戏");
         JButton soundButton = new JButton("音效：开");
+        JButton ruleButton = new JButton("游戏规则");
+        
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new GridLayout(6, 1, 0, 20));
+        JLabel titleLabel = new JLabel("斗兽棋");
+        titleLabel.setFont(new Font("Helvetica Neue", Font.BOLD, 50));
+        titleLabel.setForeground(Color.BLACK);
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        mainPanel.add(titleLabel);
+        mainPanel.add(startButton);
+        mainPanel.add(loadButton);
+        mainPanel.add(soundButton);
+        mainPanel.add(ruleButton);
+        mainPanel.add(exitButton);
+        mainPanel.setBackground(new Color(255, 255, 255));
+        setLayout(new BorderLayout());
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(100, 100, 100, 100));
+        mainPanel.setPreferredSize(new Dimension(400, 400));
+        mainPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        mainPanel.setAlignmentY(Component.CENTER_ALIGNMENT);
+        mainPanel.setOpaque(false);
+        mainPanel.setBackground(new Color(255, 255, 255));
+
+
+        add(mainPanel, BorderLayout.CENTER);
+        
+
         startButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
@@ -34,23 +65,6 @@ public class MainMenuFrame extends JFrame{
                 gameFrame.setVisible(true);
             }
         });
-
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
-
-        mainPanel.add(Box.createRigidArea(new Dimension(0, 50)));
-
-        JLabel titleLabel = new JLabel("斗兽棋");
-        titleLabel.setFont(new Font("Helvetica Neue", Font.BOLD, 50));
-        titleLabel.setForeground(new Color(220, 20, 60));
-        mainPanel.add(titleLabel);
-        mainPanel.add(Box.createRigidArea(new Dimension(0, 50)));
-        mainPanel.add(startButton);
-        mainPanel.add(Box.createRigidArea(new Dimension(0, 50)));
-        mainPanel.add(loadButton);
-        mainPanel.add(Box.createRigidArea(new Dimension(0, 50)));
-        mainPanel.add(exitButton);
-        add(mainPanel);
 
         loadButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -66,6 +80,22 @@ public class MainMenuFrame extends JFrame{
             }
         });
 
+        ruleButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String filepath = "DOUSHOUQI\\resource\\rule.txt";
+                File file = new File(filepath);
+                RuleFrame ruleFrame = null;
+                try {
+                    ruleFrame = new RuleFrame(file);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                ruleFrame.setVisible(true);
+            }
+        });
+
+
+
         //FIXME: soundButton not working
         soundButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -78,16 +108,6 @@ public class MainMenuFrame extends JFrame{
                 }
             }
         });
-
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(1, 2));
-        buttonPanel.add(soundButton);
-        buttonPanel.add(exitButton);
-        mainPanel.add(buttonPanel);
-        Sound.background();
-        add(mainPanel);
-
-
     }
 
 }
