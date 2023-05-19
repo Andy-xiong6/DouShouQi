@@ -69,4 +69,12 @@ public class GameState implements Serializable {
     public int getMoveCount() {
         return moveCount;
     }
+
+    public void setCurrentPlayer(PlayerColor currentPlayer) {
+        if(currentPlayer == PlayerColor.BLUE) {
+            isPlayer1Turn = false;
+        } else {
+            isPlayer1Turn = true;
+        } 
+    }
 }

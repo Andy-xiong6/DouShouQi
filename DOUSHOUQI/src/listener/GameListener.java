@@ -6,8 +6,8 @@ import view.JChessComponent;
 
 public interface GameListener {
 
-    void onPlayerClickCell(ChessboardPoint point, CellComponent component);
-    void onPlayerClickChessPiece(ChessboardPoint point, JChessComponent component);
+    public void onPlayerClickCell(ChessboardPoint point, CellComponent component);
+    public void onPlayerClickChessPiece(ChessboardPoint point, JChessComponent component);
 
 
 }

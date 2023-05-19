@@ -1,7 +1,13 @@
 package frame;
+import javax.naming.TimeLimitExceededException;
 import javax.swing.*;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
+
+import audio.Sound;
 import controller.GameController;
 import controller.Saver;
+import listener.GameListener;
 import model.Chessboard;
 import model.GameState;
 import model.Player;
@@ -10,9 +16,12 @@ import theme.BlueTheme;
 import theme.GreenTheme;
 import theme.RedTheme;
 import theme.Theme;
+import view.ChessTimeLabel;
 import view.ChessboardComponent;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * 这个类表示游戏过程中的整个游戏界面，是一切的载体
@@ -35,6 +44,8 @@ public class ChessGameFrame extends JFrame {
     private ChessboardComponent chessboardComponent;
     private Theme theme;
     private JLabel backgroundLabel;
+    public JLabel playerLabel;
+    public ChessTimeLabel timerLabel;
 
     public void setTheme(Theme theme) {
         this.theme = theme;
@@ -75,31 +86,33 @@ public class ChessGameFrame extends JFrame {
 
         addChessboard();
         addLabel();
+        addPlayerLabel();
         
 
         gameController = new GameController(chessboardComponent, gameState.getChessboard() ,gameState.getPlayer1(), gameState.getPlayer2());
+        gameController.setChessGameFrame(this);
         gameController.setState(gameState);
 
         saveButton = new JButton("保存游戏");
         saveButton.addActionListener(e -> saveGameState());
-        saveButton.setBounds(800, 700, 150, 50);
+        saveButton.setBounds(800, 500, 150, 50);
         add(saveButton);
 
         loadButton = new JButton("加载游戏");
         loadButton.addActionListener(e -> loadGameState());
-        loadButton.setBounds(800, 500, 150, 50);
+        loadButton.setBounds(800, 600, 150, 50);
         add(loadButton);
         
         restartButton = new JButton("重新开始");
         restartButton.addActionListener(e -> restartGame());
-        restartButton.setBounds(800, 600, 150, 50);
+        restartButton.setBounds(800, 700, 150, 50);
         add(restartButton);
 
         changeThemeButton = new JButton("切换主题");
         changeThemeButton.addActionListener(e -> showThemeDialog());
         changeThemeButton.setBounds(800, 400, 150, 50);
         add(changeThemeButton);
-        
+        Sound.background();
         setTheme(new BlueTheme());
         
     }
@@ -173,11 +186,12 @@ public class ChessGameFrame extends JFrame {
     }
 
     private void restartGame(){
-        GameState gameState = new GameState(new Chessboard(), new Player("玩家1", PlayerColor.BLUE), new Player("玩家2", PlayerColor.RED), true, 0);
+        GameState gameState = new GameState(new Chessboard(), new Player("玩家1", PlayerColor.BLUE), new Player("玩家2", PlayerColor.RED), false, 0);
         chessboardComponent.clear();
         chessboardComponent.revalidate();
         chessboardComponent.repaint();
         GameController gameController = new GameController(chessboardComponent, gameState.getChessboard(), gameState.getPlayer1(), gameState.getPlayer2());
+        gameController.setChessGameFrame(this);
     }
 
     public ChessboardComponent getChessboardComponent() {
@@ -201,12 +215,31 @@ public class ChessGameFrame extends JFrame {
      * 在游戏面板中添加标签
      */
     private void addLabel() {
-        JLabel statusLabel = new JLabel("这是标签！");
-        statusLabel.setLocation(HEIGTH, HEIGTH / 10);
+        JLabel statusLabel = new JLabel("计时器");
+        statusLabel.setLocation(920, HEIGTH / 10);
         statusLabel.setSize(200, 60);
         statusLabel.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(statusLabel);
+
+        timerLabel = new ChessTimeLabel(61,gameState);
+        timerLabel.setLocation(850, HEIGTH / 10 + 55);
+        timerLabel.setSize(200, 60);
+        timerLabel.setFont(new Font("Rockwell", Font.BOLD, 20));
+        timerLabel.start();
+        timerLabel.setForeground(Color.RED);
+        add(timerLabel);
+        
     }
 
+    public void addPlayerLabel() {
+        playerLabel = new JLabel("当前玩家：" + gameState.getCurrentPlayer().toString());
+        playerLabel.setLocation(870, HEIGTH / 10 -50);
+        playerLabel.setSize(200, 60);
+        playerLabel.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(playerLabel);
+    }
 
-}
+    public void switchPlayer() {
+        playerLabel.setText("当前玩家：" + gameState.getCurrentPlayer().toString());
+    }
+} 

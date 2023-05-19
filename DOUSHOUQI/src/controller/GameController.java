@@ -1,6 +1,7 @@
 package controller;
 
 import audio.Sound;
+import frame.ChessGameFrame;
 import listener.GameListener;
 import model.PlayerColor;
 import model.Chessboard;
@@ -24,7 +25,8 @@ public class GameController implements GameListener {
 
 
     public Chessboard model;
-    private ChessboardComponent view;
+    public ChessboardComponent view;
+    private ChessGameFrame chessGameFrame;
     private PlayerColor currentPlayer;
     private Player player1;
     private Player player2;
@@ -47,6 +49,10 @@ public class GameController implements GameListener {
         view.repaint();
     }
 
+    public void setChessGameFrame(ChessGameFrame chessGameFrame) {
+        this.chessGameFrame = chessGameFrame;
+    }
+
     private void initialize(Chessboard model) {
         model.initPieces();
     }
@@ -55,6 +61,10 @@ public class GameController implements GameListener {
     // after a valid move swap the player
     private void swapColor() {
         currentPlayer = currentPlayer == PlayerColor.BLUE ? PlayerColor.RED : PlayerColor.BLUE;
+        gameState.setCurrentPlayer(currentPlayer);
+        chessGameFrame.timerLabel.switchPlayer();
+        chessGameFrame.switchPlayer();
+        view.repaint();
     }
 
     public boolean checkWin() {
