@@ -30,6 +30,12 @@ public class ChessTimeLabel extends JLabel implements Runnable{
         this.currentPlayer = gameState.getCurrentPlayer();
     }
 
+    public void reset() {
+        this.remainingTime = initialTime;
+        this.isRunning = false;
+        this.currentPlayer = PlayerColor.BLUE;
+    }
+
     public void start() {
         isRunning = true;
         new Thread(this).start();
@@ -40,11 +46,6 @@ public class ChessTimeLabel extends JLabel implements Runnable{
     }
 
     public void switchPlayer() {
-        if(currentPlayer == PlayerColor.BLUE) {
-            currentPlayer = PlayerColor.RED;
-        } else {
-            currentPlayer = PlayerColor.BLUE;
-        }
         this.remainingTime = initialTime;
     }
 

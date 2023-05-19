@@ -11,16 +11,16 @@ public class GameState implements Serializable {
     private Chessboard chessboard;
     private Player player1;
     private Player player2;
-    private boolean isPlayer1Turn;
+    private PlayerColor currentPlayer;
     private int moveCount;
     private List<GameController> controllers = new ArrayList<>();
 
     //initialize the game state
-    public GameState(Chessboard chessboard, Player player1, Player player2, boolean isPlayer1Turn, int moveCount) {
+    public GameState(Chessboard chessboard, Player player1, Player player2, PlayerColor currentPlayer, int moveCount) {
         this.chessboard = chessboard;
         this.player1 = player1;
         this.player2 = player2;
-        this.isPlayer1Turn = isPlayer1Turn;
+        this.currentPlayer = currentPlayer;
         this.moveCount = moveCount;
         controllers = new ArrayList<>();
     }
@@ -31,7 +31,7 @@ public class GameState implements Serializable {
 
     public void restartGame(){
         this.chessboard = new Chessboard();
-        this.isPlayer1Turn = true;
+        this.currentPlayer = player1.getColor();
         this.moveCount = 0;
     }
 
@@ -53,16 +53,9 @@ public class GameState implements Serializable {
         return player2;
     }
 
-    //get current player
-    public boolean isPlayer1Turn(){
-        return isPlayer1Turn;
-    }
 
     public PlayerColor getCurrentPlayer(){
-        if(isPlayer1Turn){
-            return player1.getColor();
-        }
-        return player2.getColor(); 
+        return currentPlayer;
     }
 
     //get the move count
@@ -71,10 +64,6 @@ public class GameState implements Serializable {
     }
 
     public void setCurrentPlayer(PlayerColor currentPlayer) {
-        if(currentPlayer == PlayerColor.BLUE) {
-            isPlayer1Turn = false;
-        } else {
-            isPlayer1Turn = true;
-        } 
+        this.currentPlayer = currentPlayer;
     }
 }

@@ -1,5 +1,7 @@
 package controller;
 
+import javax.swing.JOptionPane;
+
 import audio.Sound;
 import frame.ChessGameFrame;
 import listener.GameListener;
@@ -11,7 +13,6 @@ import model.GameState;
 import view.CellComponent;
 import view.JChessComponent;
 import view.ChessboardComponent;
-import view.ElephantChessComponent;
 import model.Player;
 
 /**
@@ -26,7 +27,7 @@ public class GameController implements GameListener {
 
     public Chessboard model;
     public ChessboardComponent view;
-    private ChessGameFrame chessGameFrame;
+    public ChessGameFrame chessGameFrame;
     private PlayerColor currentPlayer;
     private Player player1;
     private Player player2;
@@ -35,12 +36,12 @@ public class GameController implements GameListener {
     // Record whether there is a selected piece before
     private ChessboardPoint selectedPoint;
 
-    public GameController(ChessboardComponent view, Chessboard model, Player player1, Player player2) {
+    public GameController(ChessboardComponent view, Chessboard model, Player player1, Player player2, PlayerColor currentPlayer) {
         this.view = view;
         this.model = model;
         this.player1 = player1;
         this.player2 = player2;
-        this.currentPlayer = player1.getColor();
+        this.currentPlayer = currentPlayer;
         this.gameState = new GameState();
 
         view.registerController(this);
@@ -60,27 +61,49 @@ public class GameController implements GameListener {
 
     // after a valid move swap the player
     private void swapColor() {
-        currentPlayer = currentPlayer == PlayerColor.BLUE ? PlayerColor.RED : PlayerColor.BLUE;
+        if(currentPlayer == PlayerColor.RED) {
+            currentPlayer = PlayerColor.BLUE;
+        }else {
+            currentPlayer = PlayerColor.RED;
+        }
         gameState.setCurrentPlayer(currentPlayer);
         chessGameFrame.timerLabel.switchPlayer();
         chessGameFrame.switchPlayer();
         view.repaint();
     }
 
-    public boolean checkWin() {
-        if(model.getChessPieceAt(new ChessboardPoint(0, 3)) != null || model.getChessPieceAt(new ChessboardPoint(8, 3)) != null){
-            return true;
-        }
-        return false;
-    }
-
-    public PlayerColor getWinner(){
+    public PlayerColor checkWin() {
         if(model.getChessPieceAt(new ChessboardPoint(0, 3)) != null){
+            chessGameFrame.timerLabel.stop();
             return PlayerColor.BLUE;
-        }else if (model.getChessPieceAt(new ChessboardPoint(8, 3)) != null){
+        }
+        if(model.getChessPieceAt(new ChessboardPoint(8, 3)) != null){
+            chessGameFrame.timerLabel.stop();
+            return PlayerColor.RED;
+        }
+        boolean allRedDead = true;
+        boolean allBlueDead = true;
+        for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
+            for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
+                if(model.grid[i][j].getPiece() != null) {
+                    if(model.grid[i][j].getPiece().getOwner() == PlayerColor.BLUE) {
+                        allBlueDead = false;
+                    }else if(model.grid[i][j].getPiece().getOwner() == PlayerColor.RED){
+                        allRedDead = false;
+                    }
+                }
+            }
+        }
+        if(allRedDead) {
+            return PlayerColor.BLUE;
+        }else if( allBlueDead) {
             return PlayerColor.RED;
         }
         return null;
+    }
+
+    public PlayerColor getWinner(){
+        return checkWin();
     }
 
     public void setState(GameState gameState){
@@ -88,7 +111,7 @@ public class GameController implements GameListener {
         this.model = gameState.getChessboard();
         this.player1 = gameState.getPlayer1();  
         this.player2 = gameState.getPlayer2();  
-        this.currentPlayer = gameState.isPlayer1Turn() ? PlayerColor.RED : PlayerColor.BLUE;    
+        this.currentPlayer = gameState.getCurrentPlayer();
         this.selectedPoint = null; 
     }
 
@@ -136,7 +159,12 @@ public class GameController implements GameListener {
             selectedPoint = null;
             swapColor();
             view.repaint();
-            getWinner();
+            if(getWinner() == PlayerColor.BLUE) {
+                JOptionPane.showMessageDialog(null, "Blue wins!");
+            }else if(getWinner() == PlayerColor.RED) {
+                JOptionPane.showMessageDialog(null, "Red wins!");
+            }
+            
             
         }
     }

@@ -1,13 +1,8 @@
 package frame;
-import javax.naming.TimeLimitExceededException;
 import javax.swing.*;
-import javax.swing.event.AncestorEvent;
-import javax.swing.event.AncestorListener;
-
 import audio.Sound;
 import controller.GameController;
 import controller.Saver;
-import listener.GameListener;
 import model.Chessboard;
 import model.GameState;
 import model.Player;
@@ -18,10 +13,7 @@ import theme.RedTheme;
 import theme.Theme;
 import view.ChessTimeLabel;
 import view.ChessboardComponent;
-
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 /**
  * 这个类表示游戏过程中的整个游戏界面，是一切的载体
@@ -61,11 +53,9 @@ public class ChessGameFrame extends JFrame {
             JPanel contentPanel = (JPanel) getContentPane();
             contentPanel.setLayout(new BorderLayout());
             contentPanel.add(backgroundLabel, BorderLayout.CENTER);
-            System.out.println("set background image");
         }else {
             backgroundLabel.setIcon(null);
             backgroundLabel.setBackground(theme.getBackgroundColor());
-            System.out.println("set background color");
         }
         theme.changeButtonAppearance(saveButton);
         theme.changeButtonAppearance(loadButton);
@@ -95,7 +85,7 @@ public class ChessGameFrame extends JFrame {
         addPlayerLabel();
         
 
-        gameController = new GameController(chessboardComponent, gameState.getChessboard() ,gameState.getPlayer1(), gameState.getPlayer2());
+        gameController = new GameController(chessboardComponent, gameState.getChessboard() ,gameState.getPlayer1(), gameState.getPlayer2(), gameState.getCurrentPlayer());
         gameController.setChessGameFrame(this);
         gameController.setState(gameState);
 
@@ -184,7 +174,7 @@ public class ChessGameFrame extends JFrame {
         //FIXME: 重新加载棋盘 ; 已经确定chessboard、grid、chesspiece都是没有问题的，应该是添加component的地方有问题,且之前的grid没有删除
         
         //chessboardComponent.initiateChessComponent(gameState.getChessboard());
-        gameController = new GameController(chessboardComponent, gameState.getChessboard(), gameState.getPlayer1(), gameState.getPlayer2());
+        gameController = new GameController(chessboardComponent, gameState.getChessboard(), gameState.getPlayer1(), gameState.getPlayer2(), gameState.getCurrentPlayer());
         chessboardComponent.revalidate();
         chessboardComponent.repaint();
         JOptionPane.showMessageDialog(this, "加载成功！");
@@ -192,12 +182,13 @@ public class ChessGameFrame extends JFrame {
     }
 
     private void restartGame(){
-        GameState gameState = new GameState(new Chessboard(), new Player("玩家1", PlayerColor.BLUE), new Player("玩家2", PlayerColor.RED), false, 0);
+        GameState gameState = new GameState(new Chessboard(), new Player("玩家1", PlayerColor.BLUE), new Player("玩家2", PlayerColor.RED), PlayerColor.BLUE, 0);
         chessboardComponent.clear();
         chessboardComponent.revalidate();
         chessboardComponent.repaint();
-        GameController gameController = new GameController(chessboardComponent, gameState.getChessboard(), gameState.getPlayer1(), gameState.getPlayer2());
+        GameController gameController = new GameController(chessboardComponent, gameState.getChessboard(), gameState.getPlayer1(), gameState.getPlayer2(), gameState.getCurrentPlayer());
         gameController.setChessGameFrame(this);
+        playerLabel.setVisible(false);
     }
 
     public ChessboardComponent getChessboardComponent() {
@@ -254,4 +245,5 @@ public class ChessGameFrame extends JFrame {
     public void switchPlayer() {
         playerLabel.setText("当前玩家：" + gameState.getCurrentPlayer().toString());
     }
+
 } 
