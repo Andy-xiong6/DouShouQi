@@ -186,16 +186,17 @@ public class ChessGameFrame extends JFrame {
             return;
         }
         gameState = newGameState;
-    
         gameController = new GameController(chessboardComponent, gameState.getChessboard() ,gameState.getPlayer1(), gameState.getPlayer2(), gameState.getCurrentPlayer(), gameRecorder);
         gameController.setChessGameFrame(this);
         chessboardComponent.revalidate();
         chessboardComponent.repaint();
+        playerLabel.setText("当前玩家： " + gameState.currentPlayer);
+        roundLabel.setText("回合数: " + (gameRecorder.index/2 + 1));
         JOptionPane.showMessageDialog(this, "加载成功！");
     }
 
     private void restartGame(){
-
+        timerLabel.reset();
         GameState gameState = new GameState(new Chessboard(), new Player("玩家1", PlayerColor.BLUE), new Player("玩家2", PlayerColor.RED), PlayerColor.BLUE, 0);
         chessboardComponent.clear();
         chessboardComponent.revalidate();
