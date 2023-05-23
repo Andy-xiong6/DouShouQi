@@ -39,7 +39,7 @@ public class ChessGameFrame extends JFrame {
     private GameState gameState;
     private GameController gameController;
 
-    private ChessboardComponent chessboardComponent;
+    ChessboardComponent chessboardComponent;
     private Theme theme;
     private JLabel backgroundLabel;
     public JLabel playerLabel;
@@ -170,7 +170,7 @@ public class ChessGameFrame extends JFrame {
         JOptionPane.showMessageDialog(this,"保存成功！");
     }
 
-    private void loadGameState(){
+    public void loadGameState(){
         gameController.model.clear();
         chessboardComponent.clear();
         GameRecorder gameRecorder = (GameRecorder) Saver.load("gamestate.ser");
@@ -202,7 +202,7 @@ public class ChessGameFrame extends JFrame {
         chessboardComponent.repaint();
         GameController gameController = new GameController(chessboardComponent, new Chessboard(), new Player("玩家1", PlayerColor.BLUE), new Player("玩家2", PlayerColor.RED), PlayerColor.BLUE, new GameRecorder(new GameState()));
         gameController.setChessGameFrame(this);
-        playerLabel.setVisible(false);
+        playerLabel.setText("当前玩家: " + gameState.currentPlayer);
     }
 
     public ChessboardComponent getChessboardComponent() {

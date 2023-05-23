@@ -11,7 +11,7 @@ public class GameState implements Serializable {
     private Chessboard chessboard = new Chessboard();
     private Player player1;
     private Player player2;
-    private PlayerColor currentPlayer;
+    public PlayerColor currentPlayer;
     private int moveCount;
     private List<GameController> controllers = new ArrayList<>();
 

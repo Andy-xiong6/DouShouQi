@@ -11,7 +11,12 @@ import java.io.File;
 import java.io.IOException;
 import javax.swing.*;
 import javax.swing.JFrame;
+
+import Record.GameRecorder;
+import Record.Saver;
+import controller.GameController;
 import model.GameState;
+import view.ChessboardComponent;
 
 public class MainMenuFrame extends JFrame{
     public MainMenuFrame(GameState gameState){
@@ -63,6 +68,7 @@ public class MainMenuFrame extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
                 ChessGameFrame gameFrame = new ChessGameFrame(1100, 810, gameState);
+                gameFrame.loadGameState();
                 gameFrame.setVisible(true);
             }
         });
