@@ -29,7 +29,7 @@ public class ChessTimeLabel extends JLabel implements Runnable{
 
     public void reset() {
         this.remainingTime = initialTime;
-        this.isRunning = false;
+        this.isRunning = true;
         this.currentPlayer = PlayerColor.BLUE;
     }
 

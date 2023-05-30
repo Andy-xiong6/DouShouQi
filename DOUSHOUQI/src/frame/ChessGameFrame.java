@@ -191,7 +191,7 @@ public class ChessGameFrame extends JFrame {
         chessboardComponent.revalidate();
         chessboardComponent.repaint();
         playerLabel.setText("当前玩家： " + gameState.currentPlayer);
-        roundLabel.setText("回合数: " + (gameRecorder.index/2 + 1));
+        roundLabel.setText("回合数: " + (gameRecorder.index + 1));
         JOptionPane.showMessageDialog(this, "加载成功！");
     }
 
@@ -203,7 +203,10 @@ public class ChessGameFrame extends JFrame {
         chessboardComponent.repaint();
         GameController gameController = new GameController(chessboardComponent, new Chessboard(), new Player("玩家1", PlayerColor.BLUE), new Player("玩家2", PlayerColor.RED), PlayerColor.BLUE, new GameRecorder(new GameState()));
         gameController.setChessGameFrame(this);
+        gameRecorder.index = 0;
         playerLabel.setText("当前玩家: " + gameState.currentPlayer);
+        playerLabel.setText("当前玩家： " + gameState.currentPlayer);
+        roundLabel.setText("回合数: " + (gameRecorder.index + 1));
     }
 
     public ChessboardComponent getChessboardComponent() {

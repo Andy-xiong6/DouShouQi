@@ -217,6 +217,11 @@ public class GameController implements GameListener, Serializable{
                     view.revalidate();
                     view.repaint();
                     getWinner();
+                    if(getWinner() == PlayerColor.BLUE) {
+                        JOptionPane.showMessageDialog(null, "Blue wins!", "游戏结束", JOptionPane.PLAIN_MESSAGE);
+                    }else if(getWinner() == PlayerColor.RED) {
+                        JOptionPane.showMessageDialog(null, "Red wins!", "游戏结束", JOptionPane.PLAIN_MESSAGE);
+                    }
                 }
             }
 
